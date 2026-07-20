@@ -56,23 +56,5 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Toggle projects visibility
-    const toggleButton = document.getElementById("toggle-projects");
-    const hiddenProjects = document.querySelectorAll(".hidden-project");
-    
-    if (toggleButton) {
-        toggleButton.addEventListener("click", () => {
-            // Toggle visibility of hidden projects
-            hiddenProjects.forEach(project => {
-                project.classList.toggle("hidden");
-            });
-            
-            // Update button text
-            if (toggleButton.textContent.trim().startsWith("Show More")) {
-                toggleButton.innerHTML = `Show Less Projects <i class="fa-solid fa-minus text-xs"></i>`;
-            } else {
-                toggleButton.innerHTML = `Show More Projects <i class="fa-solid fa-plus text-xs"></i>`;
-            }
-        });
-    }
+
 });

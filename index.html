@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fernand William Citra — Portfolio</title>
+  <title>Fernand William Citra | Founding Engineer & Full Stack Software Engineer</title>
+  <meta name="description" content="Fernand William Citra is a Founding Engineer and Full Stack Software Engineer leading digital transformation, building secure and reliable business systems from requirements through deployment." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@2.17.0/devicon.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -33,236 +34,215 @@
       },
     };
   </script>
-  <style>
-    body {
-      position: relative;
-      background: radial-gradient(circle at top left, rgba(212, 175, 55, 0.1), transparent 45%),
-                  radial-gradient(circle at bottom right, rgba(212, 175, 55, 0.08), transparent 50%),
-                  #030303;
-      min-height: 100vh;
-    }
-
-    .background-video {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      pointer-events: none;
-      z-index: -2;
-    }
-
-    .background-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      background: radial-gradient(circle at top left, rgba(6, 6, 6, 0.6), rgba(3, 3, 3, 0.85)),
-                  radial-gradient(circle at bottom right, rgba(27, 27, 27, 0.6), rgba(3, 3, 3, 0.85));
-      z-index: -1;
-    }
-
-    .hero-title span {
-      background-size: 200% 200%;
-      background-position: 0% 50%;
-      animation: gradient-sheen 12s ease-in-out infinite;
-    }
-
-    @keyframes gradient-sheen {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-
-    .fade-in {
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  </style>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="icon" href="favicon/favicon.ico" sizes="32x32" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
+  <link rel="manifest" href="favicon/site.webmanifest" />
 </head>
 <body class="bg-primary text-white antialiased">
-  <video class="background-video" autoplay muted loop playsinline>
+  <video class="background-video" autoplay muted loop playsinline aria-hidden="true">
     <source src="ui/bg.mp4" type="video/mp4" />
   </video>
   <div class="background-overlay"></div>
   <div class="relative min-h-screen overflow-hidden">
     <header class="sticky top-0 z-30">
       <div class="backdrop-blur-14 bg-primary/90 border-b border-white/5">
-        <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-          <div class="flex items-center space-x-2 text-sm uppercase tracking-[0.3em] text-white/60">
-            <span class="h-2 w-2 rounded-full bg-accent"></span>
-            <span>WELCOME, STRANGER!</span>
-          </div>
+        <div class="mx-auto flex max-w-6xl items-center justify-end px-6 py-4 md:justify-center">
           <nav class="hidden items-center gap-8 text-sm text-white/60 md:flex">
             <a href="#about" class="transition hover:text-white">ABOUT</a>
+            <a href="#skills" class="transition hover:text-white">SKILLS</a>
             <a href="#experience" class="transition hover:text-white">EXPERIENCE</a>
             <a href="#projects" class="transition hover:text-white">PROJECTS</a>
             <a href="#contact" class="transition hover:text-white">CONTACT</a>
           </nav>
+          <details class="md:hidden">
+            <summary class="cursor-pointer list-none text-sm text-white/70" aria-label="Open navigation menu">
+              <i class="fa-solid fa-bars" aria-hidden="true"></i>
+            </summary>
+            <nav class="absolute right-6 top-14 grid min-w-44 gap-3 rounded-lg border border-white/10 bg-secondary p-4 text-sm text-white/70 shadow-glow">
+              <a href="#about" class="hover:text-accent">ABOUT</a>
+              <a href="#skills" class="hover:text-accent">SKILLS</a>
+              <a href="#experience" class="hover:text-accent">EXPERIENCE</a>
+              <a href="#projects" class="hover:text-accent">PROJECTS</a>
+              <a href="#contact" class="hover:text-accent">CONTACT</a>
+            </nav>
+          </details>
         </div>
       </div>
     </header>
 
     <main class="mx-auto flex max-w-6xl flex-col gap-32 px-6 pb-24 pt-16">
-      <section id="home" class="grid gap-12 lg:grid-cols-[1.6fr_1fr] lg:items-center">
-        <div class="space-y-10">
-          <p class="text-xs uppercase tracking-[0.5em] text-white/40">Available for full-time roles</p>
-          <h1 class="hero-title text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-[3.8rem]">
-            Crafting immersive digital experiences with precision, empathy, and a hint of mischief.
-            <span class="mt-4 block bg-gradient-to-r from-[#f9e79f] via-[#d4af37] to-[#b68b2e] bg-clip-text text-transparent">Fernand William Citra</span>
-          </h1>
-          <p class="max-w-2xl text-lg text-white/60">
-            I'm a full-stack developer blending creative storytelling with technical rigor. Inspired by cinematic interfaces
-            and playful art direction, I engineer products that feel as good as they look.
-          </p>
+      <section id="home" class="grid gap-12 lg:grid-cols-[1.6fr_1fr] lg:items-center" data-reveal>
+        <div class="space-y-8">
+          <p class="text-xs uppercase tracking-[0.3em] text-accent">Founding Engineer | Full Stack Software Engineer</p>
+          <h1 class="text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">Fernand William Citra</h1>
+          <p class="max-w-2xl text-xl leading-relaxed text-white/80">I build secure, reliable business systems from requirements through deployment.</p>
+          <p class="max-w-2xl text-base leading-relaxed text-white/60">Built infrastructure that 500 sales reps rely on daily and delivered a field-sales tool that contributed to a 125 million rupiah sale within two weeks of adoption.</p>
           <div class="flex flex-wrap items-center gap-4">
-            <a href="#projects" class="inline-flex items-center gap-3 rounded-full bg-accent px-6 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-black shadow-glow transition hover:-translate-y-0.5 hover:bg-[#f3d76a]">
+            <a href="#experience" class="inline-flex items-center gap-3 rounded-lg bg-accent px-5 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-black transition hover:bg-[#f3d76a]">
               View Work
               <i class="fa-solid fa-arrow-right text-xs"></i>
             </a>
-            <a href="https://github.com/fernandwill" target="_blank" class="inline-flex items-center gap-3 rounded-full border border-white/10 px-6 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-white/70 transition hover:border-accent hover:text-accent">
-              GitHub
-              <i class="fa-brands fa-github text-base"></i>
-            </a>
           </div>
         </div>
-        <div class="space-y-6 rounded-3xl border border-white/5 bg-secondary/60 p-8 shadow-glow">
-          <div class="flex items-center justify-between text-sm text-white/60">
-            <span>Current location</span>
-            <span class="font-medium text-white">Indonesia</span>
+        <div class="space-y-5 rounded-lg border border-white/10 bg-secondary/80 p-6" data-reveal>
+          <div class="flex items-center justify-between gap-4 text-sm text-white/60">
+            <span>Based in</span>
+            <span class="font-medium text-white">Medan, Indonesia</span>
           </div>
-          <div class="flex items-center justify-between text-sm text-white/60">
-            <span>Focus</span>
-            <span class="font-medium text-white">Breaking stuff in prod</span>
+          <div class="flex items-center justify-between gap-4 text-sm text-white/60">
+            <span>Availability</span>
+            <span class="text-right font-medium text-white">Full-time roles</span>
           </div>
-          <div class="flex items-center justify-between text-sm text-white/60">
-            <span>Currently</span>
-            <span class="font-medium text-white">Exploring better UX and prompting</span>
-          </div>
-          <div class="flex items-center justify-between text-sm text-white/60">
+          <div class="flex items-center justify-between gap-4 text-sm text-white/60">
             <span>Timezone</span>
-            <span class="font-medium text-white">GMT +07.00</span>
+            <span class="font-medium text-white">GMT+7</span>
           </div>
         </div>
       </section>
 
-      <section id="about" class="space-y-10">
+      <section id="about" class="space-y-8" data-reveal>
         <div class="flex items-center gap-6">
           <span class="h-px flex-1 bg-gradient-to-r from-accent/60 to-transparent"></span>
-          <p class="text-xs uppercase tracking-[0.5em] text-white/40">About</p>
+          <h2 class="text-xs uppercase tracking-[0.3em] text-white/50">About</h2>
           <span class="h-px flex-1 bg-gradient-to-l from-accent/60 to-transparent"></span>
         </div>
-        <div class="grid gap-10 lg:grid-cols-[1.4fr_1fr]">
-          <p class="text-lg leading-relaxed text-white/70">
-            I'm Fernand, an engineer obsessed with crafting systems that feel alive. From simple dashboards to
-            AI-assisted workflows, I enjoy building with intentionality, delight, and a healthy regard for security.
-            My toolkit spans modern JavaScript ecosystems, data-heavy backends, and emergent experiments with language models, but not limited to these.
-          </p>
-          <div class="space-y-4 rounded-3xl border border-white/5 bg-tertiary/70 p-8">
-            <h3 class="text-sm uppercase tracking-[0.3em] text-accent">Values</h3>
-            <ul class="space-y-3 text-sm text-white/60">
-              <li class="flex items-center gap-3"><span class="text-accent">▹</span> Thoughtful interactions over feature bloat</li>
-              <li class="flex items-center gap-3"><span class="text-accent">▹</span> Collaborative making beats siloed building</li>
-              <li class="flex items-center gap-3"><span class="text-accent">▹</span> Humor as essential UX</li>
-            </ul>
-          </div>
+        <p class="text-lg leading-relaxed text-white/70">
+          Hi, I'm Fernand William Citra, a full-stack software engineer based in Medan, Indonesia, who leads digital transformation from requirement gathering to deployment. I work across product discovery, frontend, backend, data, deployment, and support, owning every stage of development from start to finish.
+        </p>
+        <p class="text-lg leading-relaxed text-white/70">
+          My recent work combines practical business workflows with serious security. As a founding engineer at PRUaini Group, I helped deliver the sales portal that 500 representatives across Indonesia rely on for daily operations, engineering Redis-backed session management with replay detection, a write-behind audit pipeline, and protected media delivery. On the freelance side, a field-sales activity app I delivered helped a client rediscover a forgotten lead and close a 125 million rupiah sale within two weeks of adoption.
+        </p>
+        <p class="text-lg leading-relaxed text-white/70">
+          I hold a Bachelor of Computer Science (S.Kom) in Information Systems from University of Pelita Harapan with honors, and I keep exploring across languages and communities English, from the Cypherpunk Hackathon to the Google Developer Group.
+        </p>
+      </section>
+
+      <section id="skills" class="space-y-8" data-reveal>
+        <div class="flex items-center gap-6">
+          <span class="h-px flex-1 bg-gradient-to-r from-accent/60 to-transparent"></span>
+          <h2 class="text-xs uppercase tracking-[0.3em] text-white/50">Technical Skills</h2>
+          <span class="h-px flex-1 bg-gradient-to-l from-accent/60 to-transparent"></span>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <article class="rounded-lg border border-white/10 bg-secondary/80 p-6 transition hover:border-accent/40">
+            <h3 class="text-sm font-semibold text-white">Frontend</h3>
+            <div class="mt-4 flex flex-wrap gap-2.5 text-sm">
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="devicon-react-original colored text-sm leading-none" aria-hidden="true"></i>React</span>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="devicon-nextjs-plain text-sm leading-none" aria-hidden="true"></i>Next.js</span>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="devicon-typescript-plain colored text-sm leading-none" aria-hidden="true"></i>TypeScript</span>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="devicon-javascript-plain colored text-sm leading-none" aria-hidden="true"></i>JavaScript</span>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="devicon-tailwindcss-plain colored text-sm leading-none" aria-hidden="true"></i>Tailwind CSS</span>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="devicon-zustand-plain text-sm leading-none" aria-hidden="true"></i>Zustand</span>
+            </div>
+          </article>
+          <article class="rounded-lg border border-white/10 bg-secondary/80 p-6 transition hover:border-accent/40">
+            <h3 class="text-sm font-semibold text-white">Backend & Security</h3>
+            <div class="mt-4 flex flex-wrap gap-2.5 text-sm">
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="devicon-nodejs-plain colored text-sm leading-none" aria-hidden="true"></i>Node.js</span>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="devicon-nestjs-plain colored text-sm leading-none" aria-hidden="true"></i>NestJS</span>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="fa-solid fa-code text-accent text-sm leading-none" aria-hidden="true"></i>REST APIs</span>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="fa-solid fa-key text-accent text-sm leading-none" aria-hidden="true"></i>JWT</span>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="fa-solid fa-lock text-accent text-sm leading-none" aria-hidden="true"></i>OAuth</span>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="devicon-redis-plain colored text-sm leading-none" aria-hidden="true"></i>Redis</span>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="devicon-nginx-original colored text-sm leading-none" aria-hidden="true"></i>Nginx</span>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="fa-solid fa-database text-accent text-sm leading-none" aria-hidden="true"></i>TypeORM</span>
+            </div>
+          </article>
+          <article class="rounded-lg border border-white/10 bg-secondary/80 p-6 transition hover:border-accent/40">
+            <h3 class="text-sm font-semibold text-white">Data & Platform</h3>
+            <div class="mt-4 flex flex-wrap gap-2.5 text-sm">
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="devicon-postgresql-plain colored text-sm leading-none" aria-hidden="true"></i>PostgreSQL</span>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="devicon-supabase-plain colored text-sm leading-none" aria-hidden="true"></i>Supabase</span>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="devicon-docker-plain colored text-sm leading-none" aria-hidden="true"></i>Docker</span>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="devicon-googlecloud-plain colored text-sm leading-none" aria-hidden="true"></i>Google Cloud</span>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="devicon-vercel-original text-sm leading-none" aria-hidden="true"></i>Vercel</span>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="fa-solid fa-cloud text-accent text-sm leading-none" aria-hidden="true"></i>Cloudinary</span>
+            </div>
+          </article>
+          <article class="rounded-lg border border-white/10 bg-secondary/80 p-6 transition hover:border-accent/40">
+            <h3 class="text-sm font-semibold text-white">Quality & Workflow</h3>
+            <div class="mt-4 flex flex-wrap gap-2.5 text-sm">
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="fa-solid fa-shield-halved text-accent text-sm leading-none" aria-hidden="true"></i>Zod</span>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="devicon-vitest-plain colored text-sm leading-none" aria-hidden="true"></i>Vitest</span>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="devicon-playwright-plain colored text-sm leading-none" aria-hidden="true"></i>Playwright</span>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="devicon-git-plain colored text-sm leading-none" aria-hidden="true"></i>Git</span>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="devicon-figma-plain colored text-sm leading-none" aria-hidden="true"></i>Figma</span>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="fa-solid fa-robot text-accent text-sm leading-none" aria-hidden="true"></i>AI-assisted TDD</span>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-primary/40 px-3.5 py-2 text-white/80 transition hover:border-accent/40 hover:bg-primary/60 hover:text-white"><i class="fa-solid fa-diagram-project text-accent text-sm leading-none" aria-hidden="true"></i>Multi-agent workflows</span>
+            </div>
+          </article>
         </div>
       </section>
 
-      <section id="experience" class="space-y-12">
+      <section id="experience" class="space-y-8" data-reveal>
         <div class="flex items-center gap-6">
           <span class="h-px flex-1 bg-gradient-to-r from-accent/60 to-transparent"></span>
-          <p class="text-xs uppercase tracking-[0.5em] text-white/40">Experience</p>
+          <h2 class="text-xs uppercase tracking-[0.3em] text-white/50">Experience</h2>
           <span class="h-px flex-1 bg-gradient-to-l from-accent/60 to-transparent"></span>
         </div>
         <div class="grid gap-6">
-          <article class="rounded-3xl border border-white/5 bg-secondary/70 p-8 shadow-glow transition hover:border-accent/40 hover:shadow-[0_0_50px_rgba(212,175,55,0.15)]">
-            <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <article class="rounded-lg border border-white/10 bg-secondary/80 p-6 transition hover:border-accent/40">
+            <div class="flex flex-col gap-6 md:flex-row md:justify-between">
               <div>
-                <h3 class="text-2xl font-semibold text-white uppercase">Founding Engineer</h3>
-                <h4 class="text-2xl font-semibold text-white">PRUaini Group</h4>
-                <p class="text-sm uppercase tracking-[0.3em] text-accent">January 2026 — Present</p>
+                <h3 class="text-xl font-semibold text-white">Founding Engineer</h3>
+                <p class="mt-1 text-white/70">PRUaini Group · Medan, Indonesia (Hybrid)</p>
+                <p class="mt-2 text-xs uppercase tracking-[0.2em] text-accent">January 2026 - Present</p>
               </div>
-              <div class="max-w-xl space-y-2 text-white/60">
-                <p>Orchestrated and deployed a full-stack portal (NestJS/React/PostgreSQL) on GCP, serving as the daily operational hub for 500 sales representatives across Indonesia.</p>
-                <p>Engineered a write-behind audit pipeline using Redis and NestJS cron workers, asynchronously batching up to 500 records per flush to PostgreSQL with zero data loss and no API latency impact.</p>
-                <p>Implemented Redis-backed JWT session management with token rotation and replay detection, instantly revoking compromised sessions.</p>
-                <p>Designed a custom React-based video player with disabled native controls and hidden source URLs, preventing unauthorized access to internal company video resources.</p>
-                <p>Implemented a backend actuarial calculation service that enforces proprietary formulas, input validation, and audit logging for regulated workflows.</p>
-              </div>
+              <ul class="max-w-2xl space-y-3 text-sm leading-relaxed text-white/60">
+                <li>Led a three-person team delivering a NestJS, React, and PostgreSQL sales portal on Google Cloud for 500 daily sales reps across Indonesia.</li>
+                <li>Built a Redis-to-PostgreSQL write-behind flow processing 500 records per batch with zero data loss and no app-performance impact.</li>
+                <li>Implemented JWT/Redis replay detection, protected media delivery, and auditable actuarial calculations for regulated workflows.</li>
+              </ul>
             </div>
           </article>
-          <article class="rounded-3xl border border-white/5 bg-secondary/70 p-8 shadow-glow transition hover:border-accent/40 hover:shadow-[0_0_50px_rgba(212,175,55,0.15)]">
-            <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <article class="rounded-lg border border-white/10 bg-secondary/80 p-6 transition hover:border-accent/40">
+            <div class="flex flex-col gap-6 md:flex-row md:justify-between">
               <div>
-                <h3 class="text-2xl font-semibold text-white uppercase">Software Engineer (Freelance)</h3>
-                <h4 class="text-2xl font-semibold text-white">Retail Distributor Client</h4>
-                <p class="text-sm uppercase tracking-[0.3em] text-accent">April 2026 — Present</p>
+                <h3 class="text-xl font-semibold text-white">Freelance Software Engineer</h3>
+                <p class="mt-1 text-white/70">Retail Distributor Client · Remote</p>
+                <p class="mt-2 text-xs uppercase tracking-[0.2em] text-accent">April 2026 - Present</p>
               </div>
-              <div class="max-w-xl space-y-2 text-white/60">
-                <p>Built and delivered a field sales activity management app used by 6 managers to monitor territory activities and follow up on sales opportunities. The app helped a manager rediscover a previously logged activity, leading to a follow-up that resulted in a 125 million rupiah sales closing within two weeks of adoption.</p>
-                <p>Architected the frontend, backend, and database from scratch using Next.js and Supabase PostgreSQL.</p>
-                <p>Deployed the application on Vercel and provided ongoing monitoring, maintenance, user guidance, and future feature support.</p>
-              </div>
+              <ul class="max-w-2xl space-y-3 text-sm leading-relaxed text-white/60">
+                <li>Built a field-sales activity app used by six managers to monitor territories and follow up on opportunities.</li>
+                <li>Enabled a rediscovered activity to become a 125 million rupiah sale within two weeks of adoption.</li>
+                <li>Owned Next.js, PostgreSQL, and Vercel delivery, then continued with monitoring, user guidance, and support.</li>
+              </ul>
             </div>
           </article>
         </div>
       </section>
 
-      <section id="projects" class="space-y-12">
+      <section id="projects" class="space-y-8" data-reveal>
         <div class="flex items-center gap-6">
           <span class="h-px flex-1 bg-gradient-to-r from-accent/60 to-transparent"></span>
-          <p class="text-xs uppercase tracking-[0.5em] text-white/40">Selected Work</p>
+          <h2 class="text-xs uppercase tracking-[0.3em] text-white/50">Selected Work</h2>
           <span class="h-px flex-1 bg-gradient-to-l from-accent/60 to-transparent"></span>
         </div>
         <div class="grid gap-6">
-          <article class="group flex flex-col justify-between rounded-3xl border border-white/5 bg-tertiary/80 p-8 shadow-glow transition hover:border-accent/50 hover:shadow-[0_0_50px_rgba(212,175,55,0.18)]">
+          <article class="flex flex-col justify-between rounded-lg border border-white/10 bg-tertiary/80 p-6 transition hover:border-accent/50">
             <div class="space-y-4">
-              <div class="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-white/40">
+              <div class="flex items-center justify-between text-xs uppercase tracking-[0.2em] text-white/40">
                 <span>Sports</span>
               </div>
-              <h3 class="text-2xl font-semibold text-white transition group-hover:text-accent uppercase">Capybara's Dashboard</h3>
-              <div class="flex flex-wrap gap-2 text-xs uppercase tracking-[0.3em] text-accent">
-                <span class="rounded-full border border-accent/30 px-3 py-1">Next.js</span>
-                <span class="rounded-full border border-accent/30 px-3 py-1">PostgreSQL</span>
-                <span class="rounded-full border border-accent/30 px-3 py-1">Recharts</span>
-                <span class="rounded-full border border-accent/30 px-3 py-1">Vitest</span>
-                <span class="rounded-full border border-accent/30 px-3 py-1">jsPDF</span>
-                <span class="rounded-full border border-accent/30 px-3 py-1">Custom React Hooks</span>
-                <span class="rounded-full border border-accent/30 px-3 py-1">Vercel</span>
-              </div>
-              <p class="text-white/80 pb-2">
-                Badminton match management platform with real-time updates
-              </p>
-              <div class="space-y-2 text-white/60">
-                <p>Built full-stack match tracker with Supabase JWT authentication serving 30+ active users, tracking 50+ matches and 130+ hours of gameplay with automated status updates and conflict detection.</p>
-                <p>Architected modular codebase with custom React hooks (useMatches, useStats, useCountdown), centralized validation layer, and type-safe API routes.</p>
-                <p>Implemented responsive dashboard with dark/light themes, monthly analytics with Recharts visualization, comprehensive unit tests using Vitest, and CI/CD deployment on Vercel.</p>
-                <p>Engineered a hybrid state machine in Next.js that updates match statuses on-demand per request, with a scheduled cron fallback for matches when there is no manual activity. Optimized to stay within Vercel's runtime constraints.</p>
-                <p>Designed a printable PDF export system using jsPDF to generate formatted match sheets, allowing on-court coordinators to manually track player attendance and tally player games.</p>
-              </div>
+              <h3 class="text-2xl font-semibold text-white">Capybara's Dashboard</h3>
+              <p class="text-white/80">Badminton match-management platform with real-time updates and printable match sheets.</p>
+              <p class="text-xs uppercase tracking-[0.16em] text-accent">Next.js · PostgreSQL · Recharts · Vitest · jsPDF · Vercel</p>
+              <ul class="grid gap-3 text-sm leading-relaxed text-white/60 md:grid-cols-2">
+                <li>JWT-authenticated full-stack tracker serving 30 active users, 50+ matches, and 130+ gameplay hours.</li>
+                <li>Type-safe Next.js routes, Zod validation, custom React hooks, and Supabase PostgreSQL.</li>
+                <li>Recharts analytics, light/dark themes, Vitest coverage, and Vercel CI/CD deployment.</li>
+                <li>On-demand status state machine with scheduled fallback for serverless runtime constraints.</li>
+              </ul>
             </div>
             <div class="mt-6 flex items-center gap-6 text-sm font-medium text-accent">
-              <a href="https://capybara-dashboard.vercel.app/" target="_blank" class="inline-flex items-center gap-2 hover:text-white">
+              <a href="https://capybara-dashboard.vercel.app/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 hover:text-white">
                 Visit project
                 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
               </a>
-              <a href="https://github.com/fernandwill/capybara-dashboard" target="_blank" class="inline-flex items-center gap-2 text-white/50 transition hover:text-white">
+              <a href="https://github.com/fernandwill/capybara-dashboard" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-white/50 transition hover:text-white">
                 GitHub
                 <i class="fa-brands fa-github"></i>
               </a>
@@ -271,27 +251,44 @@
         </div>
       </section>
 
-      <section id="contact" class="space-y-8">
+      <section id="education" class="space-y-8" data-reveal>
         <div class="flex items-center gap-6">
           <span class="h-px flex-1 bg-gradient-to-r from-accent/60 to-transparent"></span>
-          <p class="text-xs uppercase tracking-[0.5em] text-white/40">Contact</p>
+          <h2 class="text-xs uppercase tracking-[0.3em] text-white/50">Education</h2>
           <span class="h-px flex-1 bg-gradient-to-l from-accent/60 to-transparent"></span>
         </div>
-        <div class="rounded-3xl border border-white/5 bg-secondary/70 p-10 text-center shadow-glow">
-          <h2 class="text-3xl font-semibold text-white">Let's make something daring together.</h2>
+        <article class="flex flex-col justify-between gap-4 rounded-lg border border-white/10 bg-secondary/80 p-6 md:flex-row md:items-center">
+          <div>
+            <h3 class="text-xl font-semibold text-white">Bachelor of Computer Science (S.Kom)</h3>
+            <p class="mt-1 text-white/70">University of Pelita Harapan</p>
+            <p class="mt-1 text-white/70">Information Systems</p>
+          </div>
+          <p class="text-sm text-white/60">August 2019 - November 2023</p>
+          <p class="text-sm text-white/60">GPA 3.75/4.00 (Honors)</p>
+        </article>
+      </section>
+
+      <section id="contact" class="space-y-8" data-reveal>
+        <div class="flex items-center gap-6">
+          <span class="h-px flex-1 bg-gradient-to-r from-accent/60 to-transparent"></span>
+          <h2 class="text-xs uppercase tracking-[0.3em] text-white/50">Contact</h2>
+          <span class="h-px flex-1 bg-gradient-to-l from-accent/60 to-transparent"></span>
+        </div>
+        <div class="rounded-lg border border-white/10 bg-secondary/80 p-8 text-center">
+          <h3 class="text-3xl font-semibold text-white">Let's work together.</h3>
           <p class="mt-4 text-white/60">
-            I'm open to collaborations, full-time roles, and experiments that blur the lines between product, art, and community.
+            I am open to full-time software engineering roles and selected freelance engagements.
           </p>
-          <div class="mt-8 flex flex-wrap items-center justify-center gap-4 text-sm uppercase tracking-[0.3em] text-white/60">
-            <a href="mailto:fernandwilliam23@gmail.com" class="inline-flex items-center gap-2 rounded-full border border-white/10 px-5 py-3 transition hover:border-accent hover:text-accent">
+          <div class="mt-8 flex flex-wrap items-center justify-center gap-4 text-sm uppercase tracking-[0.2em] text-white/60">
+            <a href="mailto:fernandwilliam23@gmail.com" class="inline-flex items-center gap-2 rounded-lg border border-white/10 px-5 py-3 transition hover:border-accent hover:text-accent">
               <i class="fa-solid fa-envelope text-base"></i>
               Email
             </a>
-            <a href="https://www.linkedin.com/in/fernandwill/" target="_blank" class="inline-flex items-center gap-2 rounded-full border border-white/10 px-5 py-3 transition hover:border-accent hover:text-accent">
+            <a href="https://www.linkedin.com/in/fernandwill/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-lg border border-white/10 px-5 py-3 transition hover:border-accent hover:text-accent">
               <i class="fa-brands fa-linkedin text-base"></i>
               LinkedIn
             </a>
-            <a href="https://github.com/fernandwill" target="_blank" class="inline-flex items-center gap-2 rounded-full border border-white/10 px-5 py-3 transition hover:border-accent hover:text-accent">
+            <a href="https://github.com/fernandwill" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-lg border border-white/10 px-5 py-3 transition hover:border-accent hover:text-accent">
               <i class="fa-brands fa-github text-base"></i>
               GitHub
             </a>
@@ -301,9 +298,8 @@
     </main>
 
     <footer class="border-t border-white/5 py-10">
-      <div class="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 text-center text-xs uppercase tracking-[0.4em] text-white/40 sm:flex-row sm:justify-between sm:text-left">
+      <div class="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 text-center text-xs uppercase tracking-[0.2em] text-white/40 sm:flex-row sm:justify-center">
         <span>© Fernand William Citra</span>
-        <span>Crafted with curiosity, tea, and golden glitches.</span>
       </div>
     </footer>
   </div>

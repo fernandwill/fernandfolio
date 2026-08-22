@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+@theme {
+  --font-mono: var(--font-ibm-plex-mono), "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-sans: var(--font-ibm-plex-mono), "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+:root {
+  --font-mono: var(--font-ibm-plex-mono), "IBM Plex Mono", monospace;
+  --background: #000000;
+  --surface: #0a0a0a;
+  --card-bg: #050505;
+  --border: #facc15;
+  --border-dim: #333333;
+  --accent: #facc15;
+  --foreground: #f8f8f2;
+  --muted: #a3a3a0;
+  --dim: #666666;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: var(--font-ibm-plex-mono), "IBM Plex Mono", monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+  font-family: var(--font-ibm-plex-mono), "IBM Plex Mono", monospace;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  background-color: #000000;
+  color: #f8f8f2;
+  font-family: var(--font-ibm-plex-mono), "IBM Plex Mono", monospace;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a, button, input, textarea, select, h1, h2, h3, h4, h5, h6, p, span, li, ul, ol, div {
+  font-family: var(--font-ibm-plex-mono), "IBM Plex Mono", monospace;
+}
+
+.site-shell {
+  width: min(1280px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+/* Outer frame yellow border */
+.dashboard-frame {
+  border: 1px solid rgba(250, 204, 21, 0.4);
+  border-radius: 12px;
+  background: #080808;
+  padding: 24px;
+}
+
+@media (min-width: 768px) {
+  .dashboard-frame {
+    padding: 32px;
+  }
+}
+
+/* Terminal & Card Borders */
+.yellow-card {
+  border: 1px solid rgba(250, 204, 21, 0.6);
+  border-radius: 8px;
+  background: #050505;
+}
+
+.yellow-card-subtle {
+  border: 1px solid rgba(250, 204, 21, 0.5);
+  border-radius: 8px;
+  background: #050505;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  background: #111111;
+  padding: 2px 8px;
+  color: #a3a3a0;
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 9px;
+  height: 15px;
+  margin-left: 4px;
+  vertical-align: -2px;
+  background: #facc15;
+  animation: cursor-blink 1s steps(1, end) infinite;
+}
+
+@keyframes cursor-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Hazard Stripes Pattern */
+.hazard-stripes {
+  background: repeating-linear-gradient(
+    -45deg,
+    #facc15,
+    #facc15 3px,
+    #050505 3px,
+    #050505 9px
+  );
+}
+
+@media (max-width: 767px) {
+  .site-shell {
+    width: calc(100% - 20px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

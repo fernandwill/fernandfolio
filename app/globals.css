@@ -14,7 +14,7 @@
 }
 
 * { box-sizing: border-box; }
-html { color-scheme: light; scroll-behavior: smooth; scroll-padding-top: 24px; }
+html { color-scheme: light; scroll-behavior: smooth; scroll-padding-top: 24px; scrollbar-gutter: stable; }
 body {
   margin: 0;
   min-width: 320px;
@@ -61,11 +61,15 @@ nav { display: flex; flex-wrap: wrap; gap: 0 2ch; }
 .desk-small .desk-steam-block { top: 2.5em; left: 22ch; width: 6ch; height: 2.5em; }
 .desk-steam-cells { display: block; font-size: .5em; line-height: 1.25; }
 .desk-scene figcaption { position: relative; margin-top: 2em; color: var(--muted); text-align: center; font-size: 12px; }
-.desk-scene[data-intro="drawing"] .desk-art { animation: draw-desk 1.8s steps(20, end) both; }
-.desk-intro-controls { position: absolute; inset: 100% 0 auto; }
-.desk-skip { display: none; min-height: 44px; padding: .5em 1ch; border: 0; background: transparent; color: var(--accent); font: inherit; cursor: pointer; }
-.desk-skip:hover { text-decoration: underline; text-underline-offset: 4px; }
-.desk-scene[data-intro="drawing"] .desk-skip { display: inline-block; }
+.page-intro { display: none; border: 0; padding: clamp(12px, 3vh, 24px); margin: 0; width: 100%; max-width: none; height: 100dvh; max-height: none; overflow: auto; background: var(--background); color: var(--foreground); font: inherit; opacity: 1; transition: opacity 350ms ease; }
+.page-intro[open] { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: safe center; gap: clamp(.5em, 2vh, 1.5em); }
+.page-intro::backdrop { background: transparent; }
+.page-intro .intro-desk { flex-shrink: 0; font-size: clamp(7px, 2vh, 14px); line-height: 1.25; animation: draw-desk 1.8s steps(20, end) both; }
+.page-intro[data-phase="drawing"] ~ .portfolio-shell { opacity: 0; transform: translateY(8px); }
+.page-intro[data-phase] ~ .portfolio-shell { transition: opacity 350ms ease, transform 350ms ease; }
+.page-intro[data-phase="leaving"] { opacity: 0; }
+.intro-skip { min-height: 44px; padding: .5em 1ch; border: 0; background: transparent; color: var(--accent); font: inherit; cursor: pointer; }
+.intro-skip:hover { text-decoration: underline; text-underline-offset: 4px; }
 @keyframes draw-desk {
   from { clip-path: inset(0 0 100% 0); }
   to { clip-path: inset(0); }
@@ -138,8 +142,8 @@ footer { margin-top: 4em; color: var(--muted); font-size: 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .desk-scene[data-intro="drawing"] .desk-art { animation: none; }
+  .page-intro, .page-intro[data-phase] ~ .portfolio-shell { transition: none; }
+  .page-intro .intro-desk { animation: none; }
   .monitor-prompt[data-empty="true"]:not(:focus-within)::after { animation: none; }
-  .desk-scene[data-intro="drawing"] .desk-skip { display: none; }
   .confetti-scene[data-ready="true"] .confetti-ribbon { animation: none; }
 }

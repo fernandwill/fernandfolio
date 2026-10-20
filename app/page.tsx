@@ -1,6 +1,7 @@
 import { contact, experiences, metrics, project, socials, stack } from "@/lib/portfolio-data";
 import { AsciiIntro } from "@/components/ascii-intro";
 import { AsciiConfetti } from "@/components/ascii-confetti";
+import { PageIntro } from "@/components/page-intro";
 
 function Rule() {
   return <div className="ink-rule" aria-hidden="true">{"-".repeat(100)}</div>;
@@ -10,6 +11,7 @@ export default function HomePage() {
   return (
     <>
       <a className="skip-link" href="#main-content">[ skip to content ]</a>
+      <PageIntro />
       <div className="portfolio-shell">
         <header className="masthead">
           <a href="#about" className="wordmark">[ fw ]</a>

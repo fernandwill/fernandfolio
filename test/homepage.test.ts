@@ -5,6 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 vi.mock("@/lib/portfolio-data", () => import("../lib/portfolio-data"));
 vi.mock("@/lib/ascii-desk", () => import("../lib/ascii-desk"));
 vi.mock("@/components/ascii-intro", () => import("../components/ascii-intro"));
+vi.mock("@/components/page-intro", () => import("../components/page-intro"));
 vi.mock("@/components/ascii-steam", () => import("../components/ascii-steam"));
 vi.mock("@/lib/ascii-steam", () => import("../lib/ascii-steam"));
 vi.mock("@/components/ascii-confetti", () => import("../components/ascii-confetti"));
@@ -34,7 +35,8 @@ describe("Paper-and-ink portfolio", () => {
     expect(markup).not.toMatch(/<(img|svg|canvas|video)\b/);
     expect(markup).not.toMatch(/[^\x00-\x7f]/);
     expect(markup).toContain('[ skip intro ]');
-    expect(markup).not.toContain('data-intro="drawing"');
+    expect(markup).not.toContain('data-phase="drawing"');
+    expect(markup).not.toMatch(/<dialog[^>]*\bopen(?:=|\s|>)/);
     expect(markup).not.toContain("NORD / PORTFOLIO");
   });
 
@@ -62,6 +64,7 @@ describe("Paper-and-ink portfolio", () => {
     for (const metric of metrics) expect(markup).toContain(metric.value);
     expect(markup).toContain('id="main-content"');
     expect(markup).toContain('href="#main-content"');
+    expect(markup.indexOf('<dialog class="page-intro"')).toBeLessThan(markup.indexOf('class="portfolio-shell"'));
   });
 
   it("preserves accessible navigation and contact destinations", () => {

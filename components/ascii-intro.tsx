@@ -14,7 +14,7 @@ export function AsciiIntro() {
         value={screenText}
         onChange={(event) => setScreenText(event.currentTarget.value)}
         maxLength={12}
-        aria-label="Type on the ASCII computer (12 characters maximum)"
+        aria-label="ASCII computer prompt"
         autoComplete="off"
         autoCorrect="off"
         spellCheck={false}
@@ -32,10 +32,7 @@ export function AsciiIntro() {
         <pre aria-hidden="true">{deskSmall}<AsciiSteam compact /></pre>
         {prompt}
       </div>
-      <figcaption>
-        a little corner of the internet / medan, indonesia
-        <span className="monitor-hint">click the computer prompt to type</span>
-      </figcaption>
+      <figcaption>a little corner of the internet / medan, indonesia</figcaption>
     </figure>
   );
 }

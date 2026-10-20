@@ -18,12 +18,13 @@ describe("Interactive desk", () => {
   it("renders labelled native inputs outside the hidden artwork", () => {
     const markup = renderToStaticMarkup(createElement(AsciiIntro));
     expect(markup.match(/maxlength="12"/gi)).toHaveLength(2);
-    expect(markup.match(/aria-label="Type on the ASCII computer \(12 characters maximum\)"/g)).toHaveLength(2);
+    expect(markup.match(/aria-label="ASCII computer prompt"/g)).toHaveLength(2);
     const artwork = markup.match(/<pre\b[\s\S]*?<\/pre>/g);
     expect(artwork).toHaveLength(2);
     expect(artwork?.every((drawing) => !drawing.includes("<input"))).toBe(true);
     expect(markup.match(/data-empty="true"/g)).toHaveLength(2);
     expect(markup).not.toContain("skip intro");
+    expect(markup).not.toMatch(/click the computer prompt|to type/i);
   });
 
   it("shares typed and cleared text between the desktop and phone monitors", () => {

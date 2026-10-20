@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`dark ${ibmPlexMono.variable}`}>
+    <html lang="en" className={ibmPlexMono.variable}>
       <head>
         <link rel="icon" href="/favicon/favicon.ico" sizes="32x32" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
@@ -24,7 +24,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
         <link rel="manifest" href="/favicon/site.webmanifest" />
       </head>
-      <body className={`${ibmPlexMono.className} min-h-screen bg-[#000000] text-[#f8f8f2] selection:bg-[#facc15] selection:text-[#000000] antialiased`}>
+      <body className={ibmPlexMono.className}>
         {children}
       </body>
     </html>

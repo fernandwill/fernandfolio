@@ -32,7 +32,7 @@ export const navItems: NavItem[] = [
 
 export const metrics = [
   { value: "125M+ IDR", label: "sales impact delivered" },
-  { value: "500+", label: "active sales reps enabled" },
+  { value: "10.000", label: "active sales reps enabled" },
 ];
 
 export const stack = [
@@ -55,6 +55,15 @@ export const stack = [
 
 export const experiences: ExperienceEntry[] = [
   {
+    role: "Technical Co-Founder",
+    company: "Confidential Venture",
+    location: "U.S.-registered / Fully remote from Indonesia",
+    date: "SEP 2026 - PRESENT",
+    description:
+      "Technical co-founder at a U.S.-registered company. Further details are confidential under NDA.",
+    technologies: [],
+  },
+  {
     role: "Founding Engineer",
     company: "PRUaini Group",
     location: "Medan, Indonesia (Hybrid)",
@@ -70,7 +79,7 @@ export const experiences: ExperienceEntry[] = [
     date: "APR 2026 - PRESENT",
     description:
       "Built a field-sales activity app used by six managers to monitor territories and follow up on opportunities. Enabled a rediscovered activity to become a 125 million rupiah sale within two weeks of adoption.",
-    technologies: ["React Native", "Supabase", "PostgreSQL", "Analytics"],
+    technologies: ["Next.js", "Supabase", "PostgreSQL", "Analytics"],
   },
 ];
 
@@ -95,7 +104,7 @@ export const socials = [
 ];
 
 export const contact = {
-  email: "fernandwill.citra@gmail.com",
+  email: "fernandwilliam23@gmail.com",
   linkedin: "https://www.linkedin.com/in/fernandwill/",
   github: "https://github.com/fernandwill",
   location: "Medan, Indonesia (GMT+7)",

@@ -16,8 +16,6 @@
   "type": "module",
   "dependencies": {
     "@tailwindcss/postcss": "latest",
-    "framer-motion": "latest",
-    "lucide-react": "latest",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",

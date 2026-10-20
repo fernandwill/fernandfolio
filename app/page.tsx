@@ -1,51 +1,94 @@
-import { ExperienceCard } from "@/components/experience-card";
-import { Hero } from "@/components/hero";
-import { Navbar } from "@/components/navbar";
-import { ProjectCard } from "@/components/project-card";
-import { SectionHeader } from "@/components/section-header";
-import { Terminal } from "@/components/terminal";
+import { contact, experiences, metrics, project, socials, stack } from "@/lib/portfolio-data";
+import { AsciiIntro } from "@/components/ascii-intro";
+import { AsciiConfetti } from "@/components/ascii-confetti";
+
+function Rule() {
+  return <div className="ink-rule" aria-hidden="true">{"-".repeat(100)}</div>;
+}
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[#000000] p-3 sm:p-6 lg:p-8 flex items-center justify-center font-mono text-[#f8f8f2]">
-      <div className="w-full max-w-[1240px] rounded-xl border border-[#facc15] bg-[#050505] p-5 sm:p-8 shadow-[0_0_40px_rgba(250,204,21,0.06)] flex flex-col gap-8">
-        <Navbar />
+    <>
+      <a className="skip-link" href="#main-content">[ skip to content ]</a>
+      <div className="portfolio-shell">
+        <header className="masthead">
+          <a href="#about" className="wordmark">[ fw ]</a>
+          <nav aria-label="Main navigation">
+            <a href="#projects">work</a>
+            <a href="#experience">experience</a>
+            <a href="#contact">say hello -&gt;</a>
+          </nav>
+        </header>
 
-        {/* Top Grid: Hero Left + Terminal Right */}
-        <div className="grid items-start gap-8 lg:grid-cols-[1fr_1.35fr]">
-          <Hero />
-          <Terminal />
-        </div>
-
-        {/* Bottom Grid: Experience Log Left + Selected Work Right */}
-        <div className="grid items-stretch gap-6 lg:grid-cols-2">
-          <section
-            id="experience"
-            className="scroll-mt-24 rounded-lg border border-[#facc15] bg-[#050505] p-5 sm:p-6 flex flex-col h-full"
-            aria-labelledby="experience-heading"
-          >
-            <SectionHeader
-              id="experience-heading"
-              command="> experience.log"
-              action={<span aria-hidden="true" className="text-xs font-bold text-[#facc15]">&gt;&gt;</span>}
-            />
-            <div className="flex-1 flex flex-col justify-start">
-              <ExperienceCard />
+        <main id="main-content" tabIndex={-1}>
+          <section id="about" aria-labelledby="intro-heading">
+            <AsciiIntro />
+            <div className="intro-copy">
+              <p className="eyebrow">hello, i'm</p>
+              <h1 id="intro-heading">Fernand William Citra<span className="accent" aria-hidden="true">.</span></h1>
+              <p className="role">Currently Founding Engineer @ PRUaini Group</p>
+              <p>Enjoy turning business problems into practical software.</p>
+              <p className="availability"><span aria-hidden="true">[*] </span>{contact.availability}</p>
+              <div className="link-row"><a href="#projects">[ explore my work -&gt; ]</a><a href={`mailto:${contact.email}`}>[ say hello -&gt; ]</a></div>
             </div>
+            <dl className="impact-register">{metrics.map(({ value, label }) => (
+              <div key={label}><dt>{label}</dt><dd>{value}</dd></div>
+            ))}</dl>
           </section>
 
-          <section
-            id="projects"
-            className="scroll-mt-24 rounded-lg border border-[#facc15] bg-[#050505] p-5 sm:p-6 flex flex-col h-full"
-            aria-labelledby="projects-heading"
-          >
-            <SectionHeader id="projects-heading" command="> selected.work" />
-            <div className="flex-1 flex flex-col justify-start">
-              <ProjectCard />
-            </div>
+          <section id="projects" aria-labelledby="projects-heading" className="notebook-section">
+            <h2 id="projects-heading"><span aria-hidden="true">01 / </span>things i've built</h2>
+            <Rule />
+            <article>
+              <div className="entry-heading"><h3>{project.name}</h3><span className="muted">[ open source ]</span></div>
+              <p>{project.description}</p>
+              <p className="muted paragraph">A coordination tool for a rapidly growing local badminton club, built to make running a session as simple as playing one.</p>
+              <ul className="tech-list" aria-label="Project technologies">{project.technologies.map((technology) => <li key={technology}>[ {technology} ]</li>)}</ul>
+              <div className="link-row"><a href={project.liveUrl} target="_blank" rel="noopener noreferrer">[ live site -&gt; ]</a><a href={project.githubUrl} target="_blank" rel="noopener noreferrer">[ source -&gt; ]</a></div>
+              <details className="project-details">
+                <summary>Under the hood / project notes</summary>
+                <ul>{project.achievements.map((achievement) => <li className="project-note" key={achievement}>{achievement}</li>)}</ul>
+              </details>
+            </article>
           </section>
-        </div>
+
+          <section id="experience" aria-labelledby="experience-heading" className="notebook-section">
+            <h2 id="experience-heading"><span aria-hidden="true">02 / </span>where i've been building</h2>
+            <p className="muted">Yes, the dates overlap. That's intentional.</p>
+            <Rule />
+            <ol className="experience-list">{experiences.map((entry) => (
+              <li key={`${entry.company}-${entry.role}`}>
+                <p className="eyebrow">{entry.date}</p>
+                <h3>{entry.role}</h3>
+                <p>{entry.company} <span className="muted">/ {entry.location}</span></p>
+                <p className="paragraph muted">{entry.description}</p>
+                {entry.technologies.length > 0 && <ul className="tech-list" aria-label={`${entry.company} technologies`}>{entry.technologies.map((technology) => <li key={technology}>[ {technology} ]</li>)}</ul>}
+              </li>
+            ))}</ol>
+          </section>
+
+          <section id="terminal" aria-labelledby="stack-heading" className="notebook-section">
+            <h2 id="stack-heading"><span aria-hidden="true">03 / </span>the everyday toolkit</h2>
+            <Rule />
+            <p className="muted">Below is the stacks I'm familiar with:</p>
+            <ul className="tech-list" aria-label="Everyday technologies">{stack.map(({ label }) => <li key={label}>[ {label} ]</li>)}</ul>
+          </section>
+
+          <section id="contact" aria-labelledby="contact-heading" className="notebook-section">
+            <h2 id="contact-heading"><span aria-hidden="true">04 / </span>leave a note</h2>
+            <Rule />
+            <p>Something worth building?</p>
+            <p className="muted paragraph">I'm open to full-time roles and good conversations. Below is the list of channels I'm available on:</p>
+            <div className="link-row"><a href={`mailto:${contact.email}`}>[ Email -&gt; ]</a>{socials.map(({ label, href }) => <a key={label} href={href} target="_blank" rel="noopener noreferrer">[ {label} -&gt; ]</a>)}</div>
+          </section>
+        </main>
+
+        <footer>
+          <Rule />
+          <div className="footer-line"><span>(c) {new Date().getFullYear()} Fernand William Citra</span><a href="#about">[ back to top ^ ]</a></div>
+          <AsciiConfetti />
+        </footer>
       </div>
-    </div>
+    </>
   );
 }

@@ -78,7 +78,7 @@ describe("Full-screen page intro", () => {
     expect(showModal).toHaveBeenCalledOnce();
     expect(hooks.dialog?.dataset.phase).toBe("drawing");
     expect(body.style.overflow).toBe("hidden");
-    vi.advanceTimersByTime(1800);
+    vi.advanceTimersByTime(5000);
     expect(hooks.dialog?.dataset.phase).toBe("leaving");
     expect(hooks.dialog?.open).toBe(true);
     vi.advanceTimersByTime(350);
@@ -105,9 +105,9 @@ describe("Full-screen page intro", () => {
   });
 
   it.each([
-    ["click", 0], ["click", 1800],
-    ["cancel", 0], ["cancel", 1800],
-    ["change", 0], ["change", 1800],
+    ["click", 0], ["click", 5000],
+    ["cancel", 0], ["cancel", 5000],
+    ["change", 0], ["change", 5000],
   ] as const)("dismisses immediately on %s after %dms", (event, elapsed) => {
     mount();
     vi.advanceTimersByTime(elapsed);

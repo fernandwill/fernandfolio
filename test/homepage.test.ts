@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
@@ -65,6 +66,13 @@ describe("Paper-and-ink portfolio", () => {
     expect(markup).toContain('id="main-content"');
     expect(markup).toContain('href="#main-content"');
     expect(markup.indexOf('<dialog class="page-intro"')).toBeLessThan(markup.indexOf('class="portfolio-shell"'));
+  });
+
+  it("keeps the main content free of a focus frame", () => {
+    const css = readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
+    expect(css).not.toMatch(/main:focus-visible[^{]*\{[^}]*outline/);
+    expect(css).toMatch(/main:focus\s*\{[^}]*outline:\s*none/);
+    expect(html()).toMatch(/<main id="main-content" tabindex="-1"/);
   });
 
   it("preserves accessible navigation and contact destinations", () => {

@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { deskSmall, deskWide } from "@/lib/ascii-desk";
 
 const sessionKey = "portfolio-page-intro-v1";
-const drawDuration = 1800;
+const drawDuration = 5000;
 const transitionDuration = 350;
 
 export function PageIntro() {

@@ -1,5 +1,6 @@
 import { contact, experiences, metrics, project, socials, stack } from "@/lib/portfolio-data";
 import { AsciiIntro } from "@/components/ascii-intro";
+import { AsciiCapybara } from "@/components/ascii-capybara";
 import { AsciiConfetti } from "@/components/ascii-confetti";
 import { PageIntro } from "@/components/page-intro";
 
@@ -90,6 +91,7 @@ export default function HomePage() {
           <div className="footer-line"><span>(c) {new Date().getFullYear()} Fernand William Citra</span><a href="#about">[ back to top ^ ]</a></div>
           <AsciiConfetti />
         </footer>
+        <AsciiCapybara />
       </div>
     </>
   );

@@ -11,10 +11,13 @@ vi.mock("@/components/ascii-steam", () => import("../components/ascii-steam"));
 vi.mock("@/lib/ascii-steam", () => import("../lib/ascii-steam"));
 vi.mock("@/components/ascii-confetti", () => import("../components/ascii-confetti"));
 vi.mock("@/lib/ascii-confetti", () => import("../lib/ascii-confetti"));
+vi.mock("@/components/ascii-capybara", () => import("../components/ascii-capybara"));
+vi.mock("@/lib/ascii-capybara", () => import("../lib/ascii-capybara"));
 
 import HomePage from "../app/page";
 import { contact, experiences, metrics, project, stack } from "../lib/portfolio-data";
 import { deskWide, deskSmall } from "../lib/ascii-desk";
+import { capybaraArt } from "../lib/ascii-capybara";
 
 const html = () => renderToStaticMarkup(createElement(HomePage));
 
@@ -32,6 +35,8 @@ describe("Paper-and-ink portfolio", () => {
     const markup = html();
     expect(markup).toContain('class="desk-art desk-wide"');
     expect(markup).toContain('class="desk-art desk-small"');
+    expect(markup).toContain('class="ascii-capybara"');
+    expect(markup).toContain(renderToStaticMarkup(createElement("pre", { "aria-hidden": true }, capybaraArt)));
     expect(markup).toContain("An ASCII workspace");
     expect(markup).not.toMatch(/<(img|svg|canvas|video)\b/);
     expect(markup).not.toMatch(/[^\x00-\x7f]/);

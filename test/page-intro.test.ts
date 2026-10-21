@@ -4,12 +4,14 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const hooks = vi.hoisted(() => ({
   effect: undefined as (() => void | (() => void)) | undefined,
+  widePre: { textContent: "" },
+  smallPre: { textContent: "" },
   dialog: undefined as (EventTarget & {
     open: boolean;
     dataset: Record<string, string>;
     showModal?: () => void;
     close: () => void;
-    querySelector: () => EventTarget;
+    querySelector: (selector: string) => unknown;
   }) | undefined,
 }));
 vi.mock("react", async (importOriginal) => ({
@@ -17,8 +19,9 @@ vi.mock("react", async (importOriginal) => ({
   useEffect: (effect: () => void | (() => void)) => { hooks.effect = effect; },
   useRef: () => ({ current: hooks.dialog }),
 }));
-vi.mock("@/lib/ascii-desk", () => import("../lib/ascii-desk"));
+vi.mock("@/lib/ascii-loading", () => import("../lib/ascii-loading"));
 import { PageIntro } from "../components/page-intro";
+import { introFrame } from "../lib/ascii-loading";
 
 let motion: EventTarget & { matches: boolean };
 let storage: Map<string, string>;
@@ -37,12 +40,18 @@ function mount() {
 beforeEach(() => {
   vi.useFakeTimers();
   skip = new EventTarget();
+  hooks.widePre = { textContent: introFrame(1, false) };
+  hooks.smallPre = { textContent: introFrame(1, true) };
   hooks.dialog = Object.assign(new EventTarget(), {
     open: false,
     dataset: {},
     showModal: () => { if (hooks.dialog) hooks.dialog.open = true; showModal(); },
     close: () => { if (hooks.dialog) hooks.dialog.open = false; },
-    querySelector: () => skip,
+    querySelector: (selector: string) => {
+      if (selector === ".desk-wide") return hooks.widePre;
+      if (selector === ".desk-small") return hooks.smallPre;
+      return skip;
+    },
   });
   motion = Object.assign(new EventTarget(), { matches: false });
   storage = new Map();
@@ -78,7 +87,14 @@ describe("Full-screen page intro", () => {
     expect(showModal).toHaveBeenCalledOnce();
     expect(hooks.dialog?.dataset.phase).toBe("drawing");
     expect(body.style.overflow).toBe("hidden");
-    vi.advanceTimersByTime(5000);
+    expect(hooks.widePre.textContent).toBe(introFrame(0, false));
+    expect(hooks.smallPre.textContent).toBe(introFrame(0, true));
+    vi.advanceTimersByTime(2500);
+    expect(hooks.widePre.textContent).toContain(" 50%");
+    expect(hooks.smallPre.textContent).toContain(" 50%");
+    vi.advanceTimersByTime(2500);
+    expect(hooks.widePre.textContent).toBe(introFrame(1, false));
+    expect(hooks.smallPre.textContent).toBe(introFrame(1, true));
     expect(hooks.dialog?.dataset.phase).toBe("leaving");
     expect(hooks.dialog?.open).toBe(true);
     vi.advanceTimersByTime(350);

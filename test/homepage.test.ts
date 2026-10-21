@@ -5,6 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/lib/portfolio-data", () => import("../lib/portfolio-data"));
 vi.mock("@/lib/ascii-desk", () => import("../lib/ascii-desk"));
+vi.mock("@/lib/ascii-loading", () => import("../lib/ascii-loading"));
 vi.mock("@/components/ascii-intro", () => import("../components/ascii-intro"));
 vi.mock("@/components/page-intro", () => import("../components/page-intro"));
 vi.mock("@/components/ascii-steam", () => import("../components/ascii-steam"));

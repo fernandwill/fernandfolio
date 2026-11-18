@@ -29,7 +29,7 @@ export default function HomePage() {
             <div className="intro-copy">
               <p className="eyebrow">hello, i'm</p>
               <h1 id="intro-heading">Fernand William Citra<span className="accent" aria-hidden="true">.</span></h1>
-              <p className="role">Currently Founding Engineer @ PRUaini Group</p>
+              <p className="role">Currently Head of Information Technology @ PRUaini Group</p>
               <p>Enjoy turning business problems into practical software.</p>
               <p className="availability"><span aria-hidden="true">[*] </span>{contact.availability}</p>
               <div className="link-row"><a href="#projects">[ explore my work -&gt; ]</a><a href={`mailto:${contact.email}`}>[ say hello -&gt; ]</a></div>
@@ -66,6 +66,12 @@ export default function HomePage() {
                 <p>{entry.company} <span className="muted">/ {entry.location}</span></p>
                 <p className="paragraph muted">{entry.description}</p>
                 {entry.technologies.length > 0 && <ul className="tech-list" aria-label={`${entry.company} technologies`}>{entry.technologies.map((technology) => <li key={technology}>[ {technology} ]</li>)}</ul>}
+                {entry.highlights && (
+                  <details className="project-details">
+                    <summary>Under the hood / role notes</summary>
+                    <ul>{entry.highlights.map((highlight) => <li className="project-note" key={highlight}>{highlight}</li>)}</ul>
+                  </details>
+                )}
               </li>
             ))}</ol>
           </section>

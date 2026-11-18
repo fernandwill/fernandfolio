@@ -21,6 +21,7 @@ export type ExperienceEntry = {
   location: string;
   date: string;
   description: string;
+  highlights?: string[];
   technologies: string[];
 };
 
@@ -32,7 +33,7 @@ export const navItems: NavItem[] = [
 
 export const metrics = [
   { value: "125M+ IDR", label: "sales impact delivered" },
-  { value: "10.000", label: "active sales reps enabled" },
+  { value: "~8000", label: "agents served" },
 ];
 
 export const stack = [
@@ -50,6 +51,8 @@ export const stack = [
   { label: "PostgreSQL", icon: siPostgresql },
   { label: "Redis", icon: siRedis },
   { label: "Docker", icon: siDocker },
+  // shortcut: simple-icons dropped its AWS icon in v15, and the page renders labels only.
+  { label: "AWS" },
   { label: "GCP", icon: siGooglecloud },
 ];
 
@@ -64,13 +67,22 @@ export const experiences: ExperienceEntry[] = [
     technologies: [],
   },
   {
-    role: "Founding Engineer",
+    role: "Head of Information Technology",
     company: "PRUaini Group",
     location: "Medan, Indonesia (Hybrid)",
     date: "JAN 2025 - PRESENT",
     description:
-      "Led a three-person team delivering a Next.js, React, and PostgreSQL sales portal on Google Cloud for 500 sales reps across Indonesia.",
-    technologies: ["Next.js", "React", "PostgreSQL", "GCP", "Vercel"],
+      "Technical owner of PRUaini Group's company portal, reporting directly to the founders and leading a team of 5. Designed, built, deployed and operate the platform for ~8000 agents across Indonesia, with 186 API routes covering quotes, learning, video, events, search, notifications and admin.",
+    highlights: [
+      "Built a quote engine for 17 insurance products that runs the official premium workbooks on a worker thread with a bounded queue and hang recovery, verified by parity tests against the source's own values.",
+      "Delivered benefit illustrations for all 17 products from one shared layout that drives both the web view and the PDF, so their wording cannot drift apart.",
+      "Made quotes, PDF export and training videos work offline as a PWA, using AES-GCM encrypted device storage, per-account keys, time-limited access and a server kill switch.",
+      "Built a RAG knowledge assistant with hybrid search (PostgreSQL full-text and pgvector), SSE streaming, PDF and PPTX ingestion with vision extraction, PII redaction and a 64-question evaluation suite.",
+      "Secured the platform with Argon2, passkeys, rotating JWT sessions with reuse detection, CSRF protection, CSP, automated role-access audits and an authenticated file proxy that keeps protected URLs from clients potentially sharing them outside.",
+      "Built CI/CD with zero-downtime releases, a backup before every migration, one-command rollback, and Trivy and npm audit gates. Run hourly off-site backups with automated restore drills.",
+      "Maintain 4,600+ automated tests, including Playwright E2E, plus k6 load testing and Sentry error monitoring with data scrubbing.",
+    ],
+    technologies: ["NestJS", "React", "PostgreSQL", "Redis", "Docker", "Nginx", "AWS"],
   },
   {
     role: "Freelance Software Engineer",

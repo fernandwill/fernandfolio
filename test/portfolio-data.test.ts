@@ -5,15 +5,15 @@ describe("portfolio content contract", () => {
   it("contains the recruiter-facing navigation and proof", () => {
     expect(navItems.map((item) => item.id)).toEqual(["about", "experience", "projects"]);
     expect(experiences[0]).toMatchObject({
-      role: "Technical Co-Founder",
+      role: "Tech Lead",
       company: "Confidential Venture",
       location: "U.S.-registered / Fully remote from Indonesia",
       date: "SEP 2026 - PRESENT",
       technologies: [],
     });
     expect(experiences[0].description).toContain("NDA");
-    expect(experiences[1]).toMatchObject({ role: "Founding Engineer", company: "PRUaini Group" });
-    expect(experiences[1].description).toContain("500 sales reps");
+    expect(experiences[1]).toMatchObject({ role: "Head of Information Technology", company: "PRUaini Group" });
+    expect(experiences[1].description).toContain("~8000 agents");
     expect(experiences[2].description).toContain("125 million rupiah sale");
     expect(experiences[2].technologies).toEqual(["Next.js", "Supabase", "PostgreSQL", "Analytics"]);
   });
@@ -31,6 +31,7 @@ describe("portfolio content contract", () => {
       "PostgreSQL",
       "Redis",
       "Docker",
+      "AWS",
       "GCP",
     ]);
   });

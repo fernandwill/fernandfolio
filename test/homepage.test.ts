@@ -98,11 +98,12 @@ describe("Paper-and-ink portfolio", () => {
     for (const entry of experiences) {
       expect(markup).toContain(entry.company);
       expect(markup).toContain(entry.role);
-      expect(markup).toContain(entry.description);
+      expect(markup.replaceAll("&#x27;", "'")).toContain(entry.description);
     }
     for (const item of stack) expect(markup).toContain(item.label);
     expect(markup).toContain("<details");
-    expect(markup.match(/class="project-note"/g)).toHaveLength(project.achievements.length);
+    const highlights = experiences.flatMap((entry) => entry.highlights ?? []);
+    expect(markup.match(/class="project-note"/g)).toHaveLength(project.achievements.length + highlights.length);
     expect(markup).toContain('aria-hidden="true"');
   });
 });

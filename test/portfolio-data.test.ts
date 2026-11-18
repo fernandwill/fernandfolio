@@ -5,7 +5,7 @@ describe("portfolio content contract", () => {
   it("contains the recruiter-facing navigation and proof", () => {
     expect(navItems.map((item) => item.id)).toEqual(["about", "experience", "projects"]);
     expect(experiences[0]).toMatchObject({
-      role: "Tech Lead",
+      role: "Technical Lead",
       company: "Confidential Venture",
       location: "U.S.-based / Remote from Indonesia",
       date: "SEP 2026 - PRESENT",

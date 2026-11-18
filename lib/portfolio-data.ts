@@ -58,7 +58,7 @@ export const stack = [
 
 export const experiences: ExperienceEntry[] = [
   {
-    role: "Tech Lead",
+    role: "Technical Lead",
     company: "Confidential Venture",
     location: "U.S.-based / Remote from Indonesia",
     date: "SEP 2026 - PRESENT",

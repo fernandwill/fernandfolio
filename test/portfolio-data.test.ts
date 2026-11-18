@@ -7,7 +7,7 @@ describe("portfolio content contract", () => {
     expect(experiences[0]).toMatchObject({
       role: "Tech Lead",
       company: "Confidential Venture",
-      location: "U.S.-registered / Fully remote from Indonesia",
+      location: "U.S.-based / Remote from Indonesia",
       date: "SEP 2026 - PRESENT",
       technologies: [],
     });

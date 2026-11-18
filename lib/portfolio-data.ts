@@ -60,10 +60,10 @@ export const experiences: ExperienceEntry[] = [
   {
     role: "Tech Lead",
     company: "Confidential Venture",
-    location: "U.S.-registered / Fully remote from Indonesia",
+    location: "U.S.-based / Remote from Indonesia",
     date: "SEP 2026 - PRESENT",
     description:
-      "Technical co-founder at a U.S.-registered company. Further details are confidential under NDA.",
+      "Technical lead at a U.S.-based company. Further details are confidential under NDA.",
     technologies: [],
   },
   {
@@ -120,5 +120,4 @@ export const contact = {
   linkedin: "https://www.linkedin.com/in/fernandwill/",
   github: "https://github.com/fernandwill",
   location: "Medan, Indonesia (GMT+7)",
-  availability: "Available for full-time roles",
 };

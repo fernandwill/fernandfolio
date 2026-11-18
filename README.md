@@ -15,7 +15,7 @@ Known installation limitation: the existing lockfile has incomplete transitive d
 
 ## Page structure
 
-- Desktop and phone-sized desk illustrations, introduction, availability, and impact metrics.
+- Desktop and phone-sized desk illustrations, introduction, and impact metrics.
 - Selected work with live/source links and native expandable project notes.
 - Experience, original descriptions, and technologies.
 - Everyday toolkit, email, GitHub, and LinkedIn.

@@ -31,7 +31,6 @@ export default function HomePage() {
               <h1 id="intro-heading">Fernand William Citra<span className="accent" aria-hidden="true">.</span></h1>
               <p className="role">Currently Head of Information Technology @ PRUaini Group</p>
               <p>Enjoy turning business problems into practical software.</p>
-              <p className="availability"><span aria-hidden="true">[*] </span>{contact.availability}</p>
               <div className="link-row"><a href="#projects">[ explore my work -&gt; ]</a><a href={`mailto:${contact.email}`}>[ say hello -&gt; ]</a></div>
             </div>
             <dl className="impact-register">{metrics.map(({ value, label }) => (

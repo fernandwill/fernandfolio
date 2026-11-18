@@ -75,7 +75,6 @@ nav { display: flex; flex-wrap: wrap; gap: 0 2ch; }
 .eyebrow { margin-bottom: .5em; font-size: 12px; }
 .role { color: var(--muted); margin-top: .5em; }
 .intro-copy > p + p { margin-top: 1.5em; }
-.availability { color: var(--accent); }
 .link-row { display: flex; flex-wrap: wrap; gap: 0 3ch; margin-top: .75em; }
 .link-row a { text-decoration: none; }
 .link-row a:hover { text-decoration: underline; }

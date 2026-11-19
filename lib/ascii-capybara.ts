@@ -7,6 +7,11 @@ export interface CapybaraFrameOptions {
   step?: CapybaraStep;
 }
 
+export interface CapybaraPoint {
+  x: number;
+  y: number;
+}
+
 export interface CapybaraBounds {
   width: number;
   height: number;
@@ -32,6 +37,20 @@ const VIEWPORT_MARGIN = 16;
 const ROAM_SPEED = 96;
 const FOLLOW_SPEED = 220;
 const ROAM_PAUSE = 1.1;
+
+// Both passing poses of the walk cycle share one frame: the body lifts one dot while the legs pass under it.
+const passingFrame = [
+  "⠀⣀⠠⠤⠒⡛⢲⠫⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+  "⡎⠰⠁⠀⠉⠋⠀⠀⠀⠑⠂⠤⢐⠒⠂⢉⠫⢍⢩⢁⠒⡢⢀⠀⠀⠀",
+  "⢃⠒⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠔⠠⠐⠕⡑⡄⠀",
+  "⠀⠉⠀⠒⠒⢦⡇⠅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⢀⠪⡘⡀",
+  "⠀⠀⠀⠀⠀⠀⠹⡬⠌⡈⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠃",
+  "⠀⠀⠀⠀⠀⠀⠀⠈⢲⠠⠀⡃⠀⠀⠀⠀⠀⢠⢸⡀⠀⢀⠄⢢⠎⠀",
+  "⠀⠀⠀⠀⠀⠀⠀⠀⠈⡓⠂⡛⠑⠒⠒⠒⠒⢒⢀⡃⢐⣀⣘⠃⠀⠀",
+  "⠀⠀⠀⠀⠀⠀⠀⠀⠀⣃⢸⡇⠀⠀⠀⠀⠀⠈⢪⢀⣺⡅⢈⠆⠀⠀",
+  "⠀⠀⠀⠀⠀⠀⠀⠶⡿⠤⠚⠁⠀⠀⠀⢀⣠⡤⢺⣥⠟⢡⠃⠀⠀⠀",
+  "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀",
+];
 
 // Drawn facing left in Braille dots. Step 0 is the standing pose; steps 1-4 are a diagonal-pair walk cycle
 // (legs swing in opposite pairs, the body lifts one dot on the passing frames).
@@ -60,18 +79,7 @@ const framesByStep: Record<CapybaraStep, readonly string[]> = {
     "⠀⠀⠀⠀⠀⠀⠴⡾⠧⠐⠋⠀⠀⠀⠀⠀⢀⣠⡴⢫⣼⠏⢸⠀⠀⠀",
     "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠀⠀⠀⠀⠀⠀⠀",
   ],
-  2: [
-    "⠀⣀⠠⠤⠒⡛⢲⠫⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-    "⡎⠰⠁⠀⠉⠋⠀⠀⠀⠑⠂⠤⢐⠒⠂⢉⠫⢍⢩⢁⠒⡢⢀⠀⠀⠀",
-    "⢃⠒⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠔⠠⠐⠕⡑⡄⠀",
-    "⠀⠉⠀⠒⠒⢦⡇⠅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⢀⠪⡘⡀",
-    "⠀⠀⠀⠀⠀⠀⠹⡬⠌⡈⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠃",
-    "⠀⠀⠀⠀⠀⠀⠀⠈⢲⠠⠀⡃⠀⠀⠀⠀⠀⢠⢸⡀⠀⢀⠄⢢⠎⠀",
-    "⠀⠀⠀⠀⠀⠀⠀⠀⠈⡓⠂⡛⠑⠒⠒⠒⠒⢒⢀⡃⢐⣀⣘⠃⠀⠀",
-    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⣃⢸⡇⠀⠀⠀⠀⠀⠈⢪⢀⣺⡅⢈⠆⠀⠀",
-    "⠀⠀⠀⠀⠀⠀⠀⠶⡿⠤⠚⠁⠀⠀⠀⢀⣠⡤⢺⣥⠟⢡⠃⠀⠀⠀",
-    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀",
-  ],
+  2: passingFrame,
   3: [
     "⠀⠀⢀⣀⠤⠿⢤⢖⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
     "⡔⢩⠂⠀⠒⠗⠈⠀⠉⠢⠄⣀⠠⠤⠄⠒⢖⡒⢒⠂⠤⢄⠀⠀⠀⠀",
@@ -84,18 +92,7 @@ const framesByStep: Record<CapybaraStep, readonly string[]> = {
     "⠀⠀⠀⠀⠀⠀⠀⠐⠾⡧⠴⠋⠀⠀⢀⣠⡤⢰⣯⠜⢫⠘⠀⠀⠀⠀",
     "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀",
   ],
-  4: [
-    "⠀⣀⠠⠤⠒⡛⢲⠫⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-    "⡎⠰⠁⠀⠉⠋⠀⠀⠀⠑⠂⠤⢐⠒⠂⢉⠫⢍⢩⢁⠒⡢⢀⠀⠀⠀",
-    "⢃⠒⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠔⠠⠐⠕⡑⡄⠀",
-    "⠀⠉⠀⠒⠒⢦⡇⠅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⢀⠪⡘⡀",
-    "⠀⠀⠀⠀⠀⠀⠹⡬⠌⡈⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠃",
-    "⠀⠀⠀⠀⠀⠀⠀⠈⢲⠠⠀⡃⠀⠀⠀⠀⠀⢠⢸⡀⠀⢀⠄⢢⠎⠀",
-    "⠀⠀⠀⠀⠀⠀⠀⠀⠈⡓⠂⡛⠑⠒⠒⠒⠒⢒⢀⡃⢐⣀⣘⠃⠀⠀",
-    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⣃⢸⡇⠀⠀⠀⠀⠀⠈⢪⢀⣺⡅⢈⠆⠀⠀",
-    "⠀⠀⠀⠀⠀⠀⠀⠶⡿⠤⠚⠁⠀⠀⠀⢀⣠⡤⢺⣥⠟⢡⠃⠀⠀⠀",
-    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀",
-  ],
+  4: passingFrame,
 };
 
 const WALK_FRAME_SECONDS = 0.16;
@@ -139,7 +136,7 @@ export function clampCapybaraTarget(
   x: number,
   y: number,
   bounds: CapybaraBounds,
-): { x: number; y: number } {
+): CapybaraPoint {
   const maxX = Math.max(VIEWPORT_MARGIN, bounds.width - CAPYBARA_WIDTH - VIEWPORT_MARGIN);
   const maxY = Math.max(VIEWPORT_MARGIN, bounds.height - CAPYBARA_HEIGHT - VIEWPORT_MARGIN);
   return {
@@ -156,7 +153,7 @@ function roamLane(bounds: CapybaraBounds): [number, number] | null {
   return [left, right].find(([min, max]) => max >= min) ?? null;
 }
 
-function waypointForIndex(index: number, bounds: CapybaraBounds): { x: number; y: number } {
+function waypointForIndex(index: number, bounds: CapybaraBounds): CapybaraPoint {
   const maxX = Math.max(VIEWPORT_MARGIN, bounds.width - CAPYBARA_WIDTH - VIEWPORT_MARGIN);
   const maxY = Math.max(VIEWPORT_MARGIN, bounds.height - CAPYBARA_HEIGHT - VIEWPORT_MARGIN);
   const rx = ((index * 0.6180339887) % 1 + 1) % 1;

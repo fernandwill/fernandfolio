@@ -1,5 +1,5 @@
 export type CapybaraFacing = "left" | "right";
-export type CapybaraStep = 0 | 1 | 2;
+export type CapybaraStep = 0 | 1 | 2 | 3 | 4;
 
 export interface CapybaraFrameOptions {
   facing?: CapybaraFacing;
@@ -26,49 +26,111 @@ export interface CapybaraState {
   waypointIndex: number;
 }
 
-export const CAPYBARA_WIDTH = 136;
-export const CAPYBARA_HEIGHT = 88;
+export const CAPYBARA_WIDTH = 280;
+export const CAPYBARA_HEIGHT = 172;
 const VIEWPORT_MARGIN = 16;
 const ROAM_SPEED = 96;
 const FOLLOW_SPEED = 220;
 const ROAM_PAUSE = 1.1;
 
-const legsByStep: Record<CapybaraStep, string> = {
-  0: " |_| '---' |_|  ",
-  1: "/_/  '---'  \\_\\ ",
-  2: " \\_\\ '---' /_/  ",
+// Drawn facing left in Braille dots. Step 0 is the standing pose; steps 1-4 are a diagonal-pair walk cycle
+// (legs swing in opposite pairs, the body lifts one dot on the passing frames).
+const framesByStep: Record<CapybaraStep, readonly string[]> = {
+  0: [
+    "⠀⠀⢀⣀⠤⠿⢤⢖⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⡔⢩⠂⠀⠒⠗⠈⠀⠉⠢⠄⣀⠠⠤⠄⠒⢖⡒⢒⠂⠤⢄⠀⠀⠀⠀",
+    "⠇⠤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠈⠀⠈⠈⡨⢀⠡⡪⠢⡀⠀",
+    "⠈⠒⠀⠤⠤⣄⡆⡂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠢⠀⢕⠱⠀",
+    "⠀⠀⠀⠀⠀⠈⢳⣐⡐⠐⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠁⠇",
+    "⠀⠀⠀⠀⠀⠀⠀⠑⢤⢁⠀⠆⠀⠀⠀⠀⠀⢀⢰⠀⠀⠀⡀⢄⡜⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠘⡦⠄⡷⠢⠤⠤⠤⠤⢬⢈⡇⢠⣈⣰⠎⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⣃⢸⡇⠀⠀⠀⠀⠀⠈⢪⢀⣺⡅⢈⠆⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠶⡿⠤⠚⠁⠀⠀⠀⢀⣠⡤⢺⣥⠟⢡⠃⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀",
+  ],
+  1: [
+    "⠀⠀⢀⣀⠤⠿⢤⢖⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⡔⢩⠂⠀⠒⠗⠈⠀⠉⠢⠄⣀⠠⠤⠄⠒⢖⡒⢒⠂⠤⢄⠀⠀⠀⠀",
+    "⠇⠤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠈⠀⠈⠈⡨⢀⠡⡪⠢⡀⠀",
+    "⠈⠒⠀⠤⠤⣄⡆⡂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠢⠀⢕⠱⠀",
+    "⠀⠀⠀⠀⠀⠈⢳⣐⡐⠐⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠁⠇",
+    "⠀⠀⠀⠀⠀⠀⠀⠑⢤⢁⠀⠆⠀⠀⠀⠀⠀⢀⢰⠀⠀⠀⡀⢄⡜⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠘⡦⠄⡷⠢⠤⠤⠤⠤⢬⢈⡇⢠⣈⣰⠎⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⢀⡃⣼⠃⠀⠀⠀⠀⠀⠈⠊⡄⣚⣥⠈⡢⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠴⡾⠧⠐⠋⠀⠀⠀⠀⠀⢀⣠⡴⢫⣼⠏⢸⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠀⠀⠀⠀⠀⠀⠀",
+  ],
+  2: [
+    "⠀⣀⠠⠤⠒⡛⢲⠫⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⡎⠰⠁⠀⠉⠋⠀⠀⠀⠑⠂⠤⢐⠒⠂⢉⠫⢍⢩⢁⠒⡢⢀⠀⠀⠀",
+    "⢃⠒⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠔⠠⠐⠕⡑⡄⠀",
+    "⠀⠉⠀⠒⠒⢦⡇⠅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⢀⠪⡘⡀",
+    "⠀⠀⠀⠀⠀⠀⠹⡬⠌⡈⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠃",
+    "⠀⠀⠀⠀⠀⠀⠀⠈⢲⠠⠀⡃⠀⠀⠀⠀⠀⢠⢸⡀⠀⢀⠄⢢⠎⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠈⡓⠂⡛⠑⠒⠒⠒⠒⢒⢀⡃⢐⣀⣘⠃⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⣃⢸⡇⠀⠀⠀⠀⠀⠈⢪⢀⣺⡅⢈⠆⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠶⡿⠤⠚⠁⠀⠀⠀⢀⣠⡤⢺⣥⠟⢡⠃⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀",
+  ],
+  3: [
+    "⠀⠀⢀⣀⠤⠿⢤⢖⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⡔⢩⠂⠀⠒⠗⠈⠀⠉⠢⠄⣀⠠⠤⠄⠒⢖⡒⢒⠂⠤⢄⠀⠀⠀⠀",
+    "⠇⠤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠈⠀⠈⠈⡨⢀⠡⡪⠢⡀⠀",
+    "⠈⠒⠀⠤⠤⣄⡆⡂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠢⠀⢕⠱⠀",
+    "⠀⠀⠀⠀⠀⠈⢳⣐⡐⠐⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠁⠇",
+    "⠀⠀⠀⠀⠀⠀⠀⠑⢤⢁⠀⠆⠀⠀⠀⠀⠀⢀⢰⠀⠀⠀⡀⢄⡜⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠘⡦⠄⡷⠢⠤⠤⠤⠤⢬⢈⡇⢠⣈⣰⠎⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⢃⡘⣧⠀⠀⠀⠀⠀⠈⡎⣀⣾⠁⡨⠂⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠐⠾⡧⠴⠋⠀⠀⢀⣠⡤⢰⣯⠜⢫⠘⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+  ],
+  4: [
+    "⠀⣀⠠⠤⠒⡛⢲⠫⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⡎⠰⠁⠀⠉⠋⠀⠀⠀⠑⠂⠤⢐⠒⠂⢉⠫⢍⢩⢁⠒⡢⢀⠀⠀⠀",
+    "⢃⠒⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠔⠠⠐⠕⡑⡄⠀",
+    "⠀⠉⠀⠒⠒⢦⡇⠅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⢀⠪⡘⡀",
+    "⠀⠀⠀⠀⠀⠀⠹⡬⠌⡈⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠃",
+    "⠀⠀⠀⠀⠀⠀⠀⠈⢲⠠⠀⡃⠀⠀⠀⠀⠀⢠⢸⡀⠀⢀⠄⢢⠎⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠈⡓⠂⡛⠑⠒⠒⠒⠒⢒⢀⡃⢐⣀⣘⠃⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⣃⢸⡇⠀⠀⠀⠀⠀⠈⢪⢀⣺⡅⢈⠆⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠶⡿⠤⠚⠁⠀⠀⠀⢀⣠⡤⢺⣥⠟⢡⠃⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀",
+  ],
 };
 
-const mirrorMap: Record<string, string> = {
-  "(": ")",
-  ")": "(",
-  "/": "\\",
-  "\\": "/",
-  "<": ">",
-  ">": "<",
-  "[": "]",
-  "]": "[",
-  "{": "}",
-  "}": "{",
-};
+const WALK_FRAME_SECONDS = 0.16;
+const FOLLOWING_MARK_COLUMN = 10;
+const BRAILLE_BASE = 0x2800;
+// Braille dot bits: left column 1,2,3,7 and right column 4,5,6,8; mirroring swaps each pair.
+const BRAILLE_COLUMN_PAIRS = [[0x01, 0x08], [0x02, 0x10], [0x04, 0x20], [0x40, 0x80]] as const;
+
+function mirrorBraille(char: string): string {
+  const code = char.codePointAt(0);
+  if (code === undefined || code < BRAILLE_BASE || code > BRAILLE_BASE + 0xff) return char;
+  const dots = code - BRAILLE_BASE;
+  let mirrored = 0;
+  for (const [left, right] of BRAILLE_COLUMN_PAIRS) {
+    if (dots & left) mirrored |= right;
+    if (dots & right) mirrored |= left;
+  }
+  return String.fromCodePoint(BRAILLE_BASE + mirrored);
+}
 
 function mirrorLine(line: string): string {
-  return Array.from(line)
-    .reverse()
-    .map((char) => mirrorMap[char] ?? char)
-    .join("");
+  return Array.from(line).reverse().map(mirrorBraille).join("");
+}
+
+export function capybaraWalkStep(strideTime: number): CapybaraStep {
+  const steps = [1, 2, 3, 4] as const;
+  return steps[Math.floor(strideTime / WALK_FRAME_SECONDS) % steps.length];
 }
 
 export function capybaraFrame(options: CapybaraFrameOptions = {}): string {
   const { facing = "right", following = false, step = 0 } = options;
-  const lines = [
-    following ? "        * n____ " : "          n____ ",
-    following ? "  .------( o  .)" : "  .------( -  .)",
-    " /        '---' ",
-    "(   _     _   ) ",
-    legsByStep[step],
-  ];
-  return (facing === "left" ? lines.map(mirrorLine) : lines).join("\n");
+  const lines = framesByStep[step].map((line, row) => row === 0 && following
+    ? line.slice(0, FOLLOWING_MARK_COLUMN) + "*" + line.slice(FOLLOWING_MARK_COLUMN + 1)
+    : line);
+  return (facing === "right" ? lines.map(mirrorLine) : lines).join("\n");
 }
 
 export const capybaraArt = capybaraFrame();

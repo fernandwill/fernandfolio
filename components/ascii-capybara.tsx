@@ -6,6 +6,7 @@ import {
   CAPYBARA_WIDTH,
   capybaraArt,
   capybaraFrame,
+  capybaraWalkStep,
   type CapybaraStep,
   clampCapybaraTarget,
   createCapybaraState,
@@ -23,7 +24,7 @@ export function AsciiCapybara() {
 
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
     // Matches the CSS breakpoint that parks the capybara in the page flow, where no gutter fits it.
-    const narrow = window.matchMedia("(max-width: 60em)");
+    const narrow = window.matchMedia("(max-width: 78em)");
     const getBounds = () => {
       const column = button.parentElement?.getBoundingClientRect();
       return {
@@ -41,9 +42,7 @@ export function AsciiCapybara() {
 
     const render = () => {
       const still = motion.matches || narrow.matches;
-      const step: CapybaraStep = !state.moving || still
-        ? 0
-        : (Math.floor(state.strideTime * 8) % 2 === 0 ? 1 : 2);
+      const step: CapybaraStep = !state.moving || still ? 0 : capybaraWalkStep(state.strideTime);
       button.style.transform = narrow.matches ? "" : `translate3d(${Math.round(state.x)}px, ${Math.round(state.y)}px, 0)`;
       button.dataset.following = String(state.following);
       button.dataset.facing = state.facing;

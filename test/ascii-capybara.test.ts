@@ -11,12 +11,12 @@ describe("ASCII capybara art and movement", () => {
     expect(capybaraArt).toBe(capybaraFrame());
     for (const facing of ["right", "left"] as const) {
       for (const following of [false, true]) {
-        for (const step of [0, 1, 2] as const) {
+        for (const step of [0, 1, 2, 3, 4] as const) {
           const frame = capybaraFrame({ facing, following, step });
           const lines = frame.split("\n");
-          expect(lines).toHaveLength(5);
-          expect(lines.every((line) => line.length === 16)).toBe(true);
-          expect(frame).not.toMatch(/[^\x20-\x7e\n]/);
+          expect(lines).toHaveLength(10);
+          expect(lines.every((line) => Array.from(line).length === 26)).toBe(true);
+          expect(frame).toMatch(/^[⠀-⣿*\n]+$/);
         }
       }
     }
@@ -25,7 +25,7 @@ describe("ASCII capybara art and movement", () => {
   it("changes stride, facing direction, and alert expression across states", () => {
     const rightIdle = capybaraFrame({ facing: "right", following: false, step: 0 });
     const rightStrideA = capybaraFrame({ facing: "right", following: false, step: 1 });
-    const rightStrideB = capybaraFrame({ facing: "right", following: false, step: 2 });
+    const rightStrideB = capybaraFrame({ facing: "right", following: false, step: 3 });
     const leftIdle = capybaraFrame({ facing: "left", following: false, step: 0 });
     const rightFollowing = capybaraFrame({ facing: "right", following: true, step: 0 });
 
@@ -60,7 +60,7 @@ describe("ASCII capybara art and movement", () => {
     let state = createCapybaraState(bounds);
     for (let i = 0; i < 400; i++) {
       state = stepCapybara(state, 0.25, bounds);
-      expect(state.x + 136).toBeLessThanOrEqual(bounds.column.left);
+      expect(state.x + 280).toBeLessThanOrEqual(bounds.column.left);
     }
     expect(state.waypointIndex).toBeGreaterThan(3);
   });

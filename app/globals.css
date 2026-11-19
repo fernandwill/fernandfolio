@@ -123,13 +123,13 @@ footer { margin-top: 4em; color: var(--muted); font-size: 12px; }
 }
 .skip-link { position: fixed; z-index: 10; top: -100px; left: 20px; padding: .75em 1ch; background: var(--background); }
 .skip-link:focus { top: 1em; }
-.ascii-capybara { position: fixed; left: 24px; bottom: 24px; z-index: 5; min-height: 44px; padding: .25em .5ch; border: 0; background: transparent; color: var(--foreground); font: inherit; font-size: 12px; line-height: 1.15; cursor: pointer; user-select: none; touch-action: manipulation; }
+.ascii-capybara { position: fixed; left: 24px; bottom: 24px; z-index: 5; min-height: 44px; padding: .25em .5ch; border: 0; background: transparent; color: var(--foreground); font: inherit; font-size: 14px; line-height: 1.15; cursor: pointer; user-select: none; touch-action: manipulation; }
 .ascii-capybara[data-ready="true"] { top: 0; left: 0; bottom: auto; will-change: transform; }
 .ascii-capybara[data-following="true"] { color: var(--accent); }
 .ascii-capybara pre { line-height: 1.15; }
 .page-intro[open] ~ .portfolio-shell .ascii-capybara { display: none; }
 
-@media (max-width: 60em) {
+@media (max-width: 78em) {
   .ascii-capybara { position: relative; inset: auto; display: block; width: max-content; margin: 1.5em auto 0; }
 }
 @media (max-width: 640px) {

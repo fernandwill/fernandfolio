@@ -40,7 +40,9 @@ describe("Paper-and-ink portfolio", () => {
     expect(markup).toContain(renderToStaticMarkup(createElement("pre", { "aria-hidden": true }, capybaraArt)));
     expect(markup).toContain("An ASCII workspace");
     expect(markup).not.toMatch(/<(img|svg|canvas|video)\b/);
-    expect(markup).not.toMatch(/[^\x00-\x7f]/);
+    // The capybara is drawn in Braille dots; everything else stays plain ASCII.
+    const capybaraMarkup = renderToStaticMarkup(createElement("pre", { "aria-hidden": true }, capybaraArt));
+    expect(markup.replace(capybaraMarkup, "")).not.toMatch(/[^\x00-\x7f]/);
     expect(markup).toContain('[ skip intro ]');
     expect(markup).not.toContain('data-phase="drawing"');
     expect(markup).not.toMatch(/<dialog[^>]*\bopen(?:=|\s|>)/);

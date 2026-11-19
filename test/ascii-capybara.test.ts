@@ -55,6 +55,16 @@ describe("ASCII capybara art and movement", () => {
     }
   });
 
+  it("roams only in a gutter beside the text column", () => {
+    const bounds = { width: 1440, height: 900, column: { left: 418, right: 1022 } };
+    let state = createCapybaraState(bounds);
+    for (let i = 0; i < 400; i++) {
+      state = stepCapybara(state, 0.25, bounds);
+      expect(state.x + 136).toBeLessThanOrEqual(bounds.column.left);
+    }
+    expect(state.waypointIndex).toBeGreaterThan(3);
+  });
+
   it("runs toward the cursor when following and settles once it arrives", () => {
     const bounds = { width: 800, height: 600 };
     let state = {

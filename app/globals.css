@@ -28,6 +28,7 @@ body {
 }
 ::selection { background: var(--accent); color: var(--background); }
 h1, h2, h3, p, figure, pre, dl, dd, ul, ol { margin: 0; }
+p, li { text-wrap: pretty; }
 h1, h2, h3 { font: inherit; font-weight: 500; }
 h1 { font-size: clamp(20px, 4vw, 26px); line-height: 1.4; letter-spacing: -.05em; }
 h2 { margin-bottom: .5em; }
@@ -72,7 +73,7 @@ nav { display: flex; flex-wrap: wrap; gap: 0 2ch; }
 .page-intro[data-phase="leaving"] { opacity: 0; }
 .intro-skip { min-height: 44px; padding: .5em 1ch; border: 0; background: transparent; color: var(--accent); font: inherit; cursor: pointer; }
 .intro-skip:hover { text-decoration: underline; text-underline-offset: 4px; }
-.eyebrow { margin-bottom: .5em; font-size: 12px; }
+.eyebrow { margin-bottom: .5em; font-size: 13px; }
 .role { color: var(--muted); margin-top: .5em; }
 .intro-copy > p + p { margin-top: 1.5em; }
 .link-row { display: flex; flex-wrap: wrap; gap: 0 3ch; margin-top: .75em; }
@@ -80,13 +81,16 @@ nav { display: flex; flex-wrap: wrap; gap: 0 2ch; }
 .link-row a:hover { text-decoration: underline; }
 .impact-register { display: flex; flex-wrap: wrap; gap: 1.5em 5ch; margin-top: 2em; }
 .impact-register > div { display: flex; flex-direction: column-reverse; }
-.impact-register dt { color: var(--muted); font-size: 12px; }
+.impact-register dt { color: var(--muted); font-size: 13px; }
 .impact-register dd { font-weight: 500; }
 .notebook-section { margin-top: 4em; }
 .ink-rule { overflow: hidden; white-space: nowrap; color: var(--rule); line-height: 1; margin-bottom: 1.75em; user-select: none; }
 .entry-heading { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 1ch; }
 .paragraph { margin-top: 1em; }
-.tech-list { display: flex; flex-wrap: wrap; gap: .25em 1ch; margin-top: 1em; color: var(--muted); font-size: 12px; }
+.tech-list { display: flex; flex-wrap: wrap; gap: .25em 1ch; margin-top: 1em; color: var(--muted); font-size: 13px; }
+.stack-groups > div { display: grid; grid-template-columns: 14ch 1fr; align-items: baseline; gap: 0 2ch; margin-top: 1em; }
+.stack-groups h3 { margin: 0; color: var(--muted); font-size: 13px; }
+.stack-groups .tech-list { margin-top: 0; }
 .project-details { margin-top: .75em; }
 .project-details summary { cursor: pointer; padding-block: .75em; color: var(--accent); }
 .project-details summary:hover { text-decoration: underline; text-underline-offset: 4px; }
@@ -125,13 +129,17 @@ footer { margin-top: 4em; color: var(--muted); font-size: 12px; }
 .ascii-capybara pre { line-height: 1.15; }
 .page-intro[open] ~ .portfolio-shell .ascii-capybara { display: none; }
 
+@media (max-width: 60em) {
+  .ascii-capybara { position: relative; inset: auto; display: block; width: max-content; margin: 1.5em auto 0; }
+}
 @media (max-width: 640px) {
   .portfolio-shell { margin-top: 1em; }
   nav { column-gap: 1.5ch; font-size: 12px; }
   .desk-wide { display: none; }
   .desk-small { display: block; }
-  .desk-scene { margin-block: 3em 2.5em; }
-  .desk-scene figcaption { max-width: 30ch; margin-inline: auto; }
+  .desk-scene { margin-block: 1.5em; }
+  .desk-scene figcaption { max-width: 30ch; margin: 1em auto 0; }
+  .stack-groups > div { grid-template-columns: 1fr; }
   .notebook-section { margin-top: 3em; }
   .confetti-stage { font-size: 10px; }
   .confetti-reveller { width: 18ch; height: 15em; }

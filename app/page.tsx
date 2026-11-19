@@ -27,10 +27,9 @@ export default function HomePage() {
           <section id="about" aria-labelledby="intro-heading">
             <AsciiIntro />
             <div className="intro-copy">
-              <p className="eyebrow">hello, i'm</p>
               <h1 id="intro-heading">Fernand William Citra<span className="accent" aria-hidden="true">.</span></h1>
               <p className="role">Currently Head of Information Technology @ PRUaini Group</p>
-              <p>Enjoy turning business problems into practical software.</p>
+              <p>Enjoy turning business problems into practical software, then owning it end to end: design, security, deployment, and day-to-day operations.</p>
               <div className="link-row"><a href="#projects">[ explore my work -&gt; ]</a><a href={`mailto:${contact.email}`}>[ say hello -&gt; ]</a></div>
             </div>
             <dl className="impact-register">{metrics.map(({ value, label }) => (
@@ -78,15 +77,20 @@ export default function HomePage() {
           <section id="terminal" aria-labelledby="stack-heading" className="notebook-section">
             <h2 id="stack-heading"><span aria-hidden="true">03 / </span>the everyday toolkit</h2>
             <Rule />
-            <p className="muted">Below is the stacks I'm familiar with:</p>
-            <ul className="tech-list" aria-label="Everyday technologies">{stack.map(({ label }) => <li key={label}>[ {label} ]</li>)}</ul>
+            <p className="muted">What I reach for most:</p>
+            <div className="stack-groups">{[...new Set(stack.map(({ group }) => group))].map((group) => (
+              <div key={group}>
+                <h3>{group}</h3>
+                <ul className="tech-list">{stack.filter((item) => item.group === group).map(({ label }) => <li key={label}>[ {label} ]</li>)}</ul>
+              </div>
+            ))}</div>
           </section>
 
           <section id="contact" aria-labelledby="contact-heading" className="notebook-section">
             <h2 id="contact-heading"><span aria-hidden="true">04 / </span>leave a note</h2>
             <Rule />
             <p>Something worth building?</p>
-            <p className="muted paragraph">I'm open to full-time roles and good conversations. Below is the list of channels I'm available on:</p>
+            <p className="muted paragraph">I'm open to full-time roles first, freelance projects too, and always good conversations. Below is the list of channels I'm available on:</p>
             <div className="link-row"><a href={`mailto:${contact.email}`}>[ Email -&gt; ]</a>{socials.map(({ label, href }) => <a key={label} href={href} target="_blank" rel="noopener noreferrer">[ {label} -&gt; ]</a>)}</div>
           </section>
         </main>

@@ -10,6 +10,7 @@ export interface CapybaraFrameOptions {
 export interface CapybaraBounds {
   width: number;
   height: number;
+  column?: { left: number; right: number };
 }
 
 export interface CapybaraState {
@@ -85,13 +86,22 @@ export function clampCapybaraTarget(
   };
 }
 
+// One lane only: switching gutters would walk the capybara across the text column.
+function roamLane(bounds: CapybaraBounds): [number, number] | null {
+  if (!bounds.column) return null;
+  const left: [number, number] = [VIEWPORT_MARGIN, bounds.column.left - CAPYBARA_WIDTH - VIEWPORT_MARGIN];
+  const right: [number, number] = [bounds.column.right + VIEWPORT_MARGIN, bounds.width - CAPYBARA_WIDTH - VIEWPORT_MARGIN];
+  return [left, right].find(([min, max]) => max >= min) ?? null;
+}
+
 function waypointForIndex(index: number, bounds: CapybaraBounds): { x: number; y: number } {
   const maxX = Math.max(VIEWPORT_MARGIN, bounds.width - CAPYBARA_WIDTH - VIEWPORT_MARGIN);
   const maxY = Math.max(VIEWPORT_MARGIN, bounds.height - CAPYBARA_HEIGHT - VIEWPORT_MARGIN);
   const rx = ((index * 0.6180339887) % 1 + 1) % 1;
   const ry = ((index * 0.3819660113 + 0.25) % 1 + 1) % 1;
+  const [minLaneX, maxLaneX] = roamLane(bounds) ?? [VIEWPORT_MARGIN, maxX];
   return {
-    x: Math.round(VIEWPORT_MARGIN + rx * (maxX - VIEWPORT_MARGIN)),
+    x: Math.round(minLaneX + rx * (maxLaneX - minLaneX)),
     y: Math.round(VIEWPORT_MARGIN + ry * (maxY - VIEWPORT_MARGIN)),
   };
 }
@@ -113,6 +123,23 @@ export function createCapybaraState(bounds: CapybaraBounds): CapybaraState {
   };
 }
 
+export function retargetCapybara(state: CapybaraState, bounds: CapybaraBounds): CapybaraState {
+  const current = clampCapybaraTarget(state.x, state.y, bounds);
+  const nextIndex = state.waypointIndex + 1;
+  const nextTarget = waypointForIndex(nextIndex, bounds);
+  return {
+    ...state,
+    x: current.x,
+    y: current.y,
+    targetX: nextTarget.x,
+    targetY: nextTarget.y,
+    facing: nextTarget.x < current.x ? "left" : "right",
+    moving: true,
+    pauseRemaining: 0,
+    waypointIndex: nextIndex,
+  };
+}
+
 export function stepCapybara(
   state: CapybaraState,
   dt: number,
@@ -130,19 +157,7 @@ export function stepCapybara(
         pauseRemaining: remaining,
       };
     }
-    const nextIndex = state.waypointIndex + 1;
-    const nextTarget = waypointForIndex(nextIndex, bounds);
-    return {
-      ...state,
-      x: clampedCurrent.x,
-      y: clampedCurrent.y,
-      targetX: nextTarget.x,
-      targetY: nextTarget.y,
-      facing: nextTarget.x < clampedCurrent.x ? "left" : "right",
-      moving: true,
-      pauseRemaining: 0,
-      waypointIndex: nextIndex,
-    };
+    return retargetCapybara(state, bounds);
   }
 
   const target = clampCapybaraTarget(state.targetX, state.targetY, bounds);

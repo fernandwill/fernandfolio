@@ -118,7 +118,7 @@ describe("Interactive ASCII capybara component", () => {
     expect(hooks.button?.style.transform).not.toBe(beforeFollow);
     expect(hooks.button?.dataset.facing).toBe("right");
 
-    hooks.button?.dispatchEvent(new Event("click"));
+    hooks.button?.dispatchEvent(Object.assign(new Event("click"), { clientX: 700, clientY: 220 }));
     expect(hooks.button?.getAttribute("aria-pressed")).toBe("false");
     expect(hooks.button?.dataset.following).toBe("false");
   });

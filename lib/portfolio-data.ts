@@ -37,23 +37,20 @@ export const metrics = [
 ];
 
 export const stack = [
-  // Frontend
-  { label: "React", icon: siReact },
-  { label: "Next.js", icon: siNextdotjs },
-  { label: "TypeScript", icon: siTypescript },
-  { label: "Tailwind", icon: siTailwindcss },
-  // Backend & Languages
-  { label: "Python", icon: siPython },
-  { label: "FastAPI", icon: siFastapi },
-  { label: "NestJS", icon: siNestjs },
-  { label: "Java Springboot", icon: siSpringboot },
-  // Database, Cloud & DevOps
-  { label: "PostgreSQL", icon: siPostgresql },
-  { label: "Redis", icon: siRedis },
-  { label: "Docker", icon: siDocker },
+  { group: "frontend", label: "React", icon: siReact },
+  { group: "frontend", label: "Next.js", icon: siNextdotjs },
+  { group: "frontend", label: "TypeScript", icon: siTypescript },
+  { group: "frontend", label: "Tailwind", icon: siTailwindcss },
+  { group: "backend", label: "Python", icon: siPython },
+  { group: "backend", label: "FastAPI", icon: siFastapi },
+  { group: "backend", label: "NestJS", icon: siNestjs },
+  { group: "backend", label: "Java Springboot", icon: siSpringboot },
+  { group: "data & cloud", label: "PostgreSQL", icon: siPostgresql },
+  { group: "data & cloud", label: "Redis", icon: siRedis },
+  { group: "data & cloud", label: "Docker", icon: siDocker },
   // shortcut: simple-icons dropped its AWS icon in v15, and the page renders labels only.
-  { label: "AWS" },
-  { label: "GCP", icon: siGooglecloud },
+  { group: "data & cloud", label: "AWS" },
+  { group: "data & cloud", label: "GCP", icon: siGooglecloud },
 ];
 
 export const experiences: ExperienceEntry[] = [

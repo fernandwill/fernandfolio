@@ -9,6 +9,7 @@ import {
   type CapybaraStep,
   clampCapybaraTarget,
   createCapybaraState,
+  retargetCapybara,
   stepCapybara,
 } from "@/lib/ascii-capybara";
 
@@ -21,7 +22,16 @@ export function AsciiCapybara() {
     if (!button || !art) return;
 
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const getBounds = () => ({ width: window.innerWidth, height: window.innerHeight });
+    // Matches the CSS breakpoint that parks the capybara in the page flow, where no gutter fits it.
+    const narrow = window.matchMedia("(max-width: 60em)");
+    const getBounds = () => {
+      const column = button.parentElement?.getBoundingClientRect();
+      return {
+        width: window.innerWidth,
+        height: window.innerHeight,
+        column: column && { left: column.left, right: column.right },
+      };
+    };
     let state = createCapybaraState(getBounds());
     let pointer = { x: state.x, y: state.y };
     let hasPointer = false;
@@ -30,13 +40,14 @@ export function AsciiCapybara() {
     let painted = -1;
 
     const render = () => {
-      const step: CapybaraStep = !state.moving || motion.matches
+      const still = motion.matches || narrow.matches;
+      const step: CapybaraStep = !state.moving || still
         ? 0
         : (Math.floor(state.strideTime * 8) % 2 === 0 ? 1 : 2);
-      button.style.transform = `translate3d(${Math.round(state.x)}px, ${Math.round(state.y)}px, 0)`;
+      button.style.transform = narrow.matches ? "" : `translate3d(${Math.round(state.x)}px, ${Math.round(state.y)}px, 0)`;
       button.dataset.following = String(state.following);
       button.dataset.facing = state.facing;
-      button.dataset.moving = String(state.moving && !motion.matches);
+      button.dataset.moving = String(state.moving && !still);
       button.setAttribute("aria-pressed", String(state.following));
       art.textContent = capybaraFrame({
         facing: state.facing,
@@ -61,15 +72,13 @@ export function AsciiCapybara() {
       if (frame !== null) cancelAnimationFrame(frame);
       frame = null;
       render();
-      if (!motion.matches && !document.hidden) {
+      if (!motion.matches && !narrow.matches && !document.hidden) {
         previous = performance.now();
         frame = requestAnimationFrame(draw);
       }
     };
 
-    const updatePointer = (event: Event) => {
-      const { clientX, clientY } = event as MouseEvent;
-      if (typeof clientX !== "number" || typeof clientY !== "number") return;
+    const updatePointer = ({ clientX, clientY }: MouseEvent) => {
       if (clientX === 0 && clientY === 0 && !hasPointer) return;
       hasPointer = true;
       pointer = clampCapybaraTarget(
@@ -89,7 +98,7 @@ export function AsciiCapybara() {
       }
     };
 
-    const onClick = (event: Event) => {
+    const onClick = (event: MouseEvent) => {
       updatePointer(event);
       const nextFollowing = !state.following;
       state = {
@@ -104,32 +113,41 @@ export function AsciiCapybara() {
 
     const onResize = () => {
       const bounds = getBounds();
-      const clamped = clampCapybaraTarget(state.x, state.y, bounds);
-      const clampedTarget = clampCapybaraTarget(state.targetX, state.targetY, bounds);
-      state = {
-        ...state,
-        x: clamped.x,
-        y: clamped.y,
-        targetX: clampedTarget.x,
-        targetY: clampedTarget.y,
-      };
+      if (state.following) {
+        const clamped = clampCapybaraTarget(state.x, state.y, bounds);
+        const clampedTarget = clampCapybaraTarget(state.targetX, state.targetY, bounds);
+        state = { ...state, x: clamped.x, y: clamped.y, targetX: clampedTarget.x, targetY: clampedTarget.y };
+      } else {
+        // The old waypoint may now sit over the text column.
+        state = retargetCapybara(state, bounds);
+      }
       render();
     };
 
     button.dataset.ready = "true";
+    // The column width settles only after the web font swaps in, so watch it rather than measuring once.
+    const shell = button.parentElement;
+    let columnObserver: ResizeObserver | undefined;
+    if (shell) {
+      columnObserver = new ResizeObserver(onResize);
+      columnObserver.observe(shell);
+    }
     sync();
     button.addEventListener("click", onClick);
     window.addEventListener("pointermove", updatePointer);
     window.addEventListener("resize", onResize);
     motion.addEventListener("change", sync);
+    narrow.addEventListener("change", sync);
     document.addEventListener("visibilitychange", sync);
 
     return () => {
       if (frame !== null) cancelAnimationFrame(frame);
+      columnObserver?.disconnect();
       button.removeEventListener("click", onClick);
       window.removeEventListener("pointermove", updatePointer);
       window.removeEventListener("resize", onResize);
       motion.removeEventListener("change", sync);
+      narrow.removeEventListener("change", sync);
       document.removeEventListener("visibilitychange", sync);
       delete button.dataset.ready;
       delete button.dataset.following;

@@ -18,7 +18,7 @@ Known installation limitation: the existing lockfile has incomplete transitive d
 - Desktop and phone-sized desk illustrations, introduction, and impact metrics.
 - Selected work with live/source links and native expandable project notes.
 - Experience, original descriptions, and technologies.
-- Everyday toolkit, email, GitHub, and LinkedIn.
+- Everyday toolkit grouped by frontend, backend, and data & cloud, then email, GitHub, and LinkedIn.
 
 The server-rendered page lives in `app/page.tsx`, styling in `app/globals.css`, and the original ASCII desk drawings in `lib/ascii-desk.ts`. Phones use a smaller composition rather than shrinking the desktop artwork.
 
@@ -33,7 +33,7 @@ The server-rendered page lives in `app/page.tsx`, styling in `app/globals.css`, 
 - The computer prompt is a labelled, keyboard-accessible text input with a blinking idle cursor and a compact underline focus indicator, rather than a box around its larger click target. It accepts up to 12 characters and backspace clears the text. Desktop and phone monitors share the text while the page is open. The page carries no on-screen usage instructions. Nothing is stored, transmitted, or executed, and the idle cursor stays static for reduced-motion users.
 - Coffee steam flows inside a fixed character block above the cup: 16 x 8 small cells on desktop, 12 x 4 on phones. A requestAnimationFrame loop targets 60 updates per second without React re-renders, and stops when offscreen or the tab is hidden. Reduced-motion preferences disable the loop and restore a static frame; disabled JavaScript or missing IntersectionObserver also leaves static steam. The renderer lives in `lib/ascii-steam.ts` and its lifecycle in `components/ascii-steam.tsx`.
 - Two mirrored kneeling figures at the bottom blow ASCII ribbons inward. Ribbons loop automatically whenever the footer scene is in view, without a visible control. Phones use fewer ribbons and smaller figures. Reduced motion, disabled JavaScript, or missing IntersectionObserver leaves static artwork. The scene lives in `components/ascii-confetti.tsx` and the figure in `lib/ascii-confetti.ts`.
-- An interactive ASCII capybara roams around the viewport and toggles cursor-following when clicked (`aria-pressed`). Reduced motion or hidden tabs pause the animation loop and restore the standing frame. The sprite and movement helpers live in `lib/ascii-capybara.ts` and the interactive control in `components/ascii-capybara.tsx`.
+- An interactive ASCII capybara roams in the margin beside the text column, so it never covers content, and toggles cursor-following when clicked (`aria-pressed`). At 60em and narrower there is no margin wide enough, so it stands still at the end of the page. Reduced motion or hidden tabs pause the animation loop and restore the standing frame. The sprite and movement helpers live in `lib/ascii-capybara.ts` and the interactive control in `components/ascii-capybara.tsx`.
 - Only the current desk, steam, monitor, confetti, and capybara renderers are retained; earlier experimental renderers and their dedicated tests have been removed.
 
 ## Repository hygiene
